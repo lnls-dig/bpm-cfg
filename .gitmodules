@@ -1,0 +1,3 @@
+[submodule "foreign/fpga-programming"]
+	path = foreign/fpga-programming
+	url = https://github.com/lnls-dig/fpga-programming.git
