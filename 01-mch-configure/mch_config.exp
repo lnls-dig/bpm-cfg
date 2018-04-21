@@ -1,0 +1,78 @@
+#!/usr/bin/expect -f
+
+set send_slow {1 .1}
+proc send {ignore arg} {
+    sleep .1
+    exp_send -s -- $arg
+}
+
+if { $argc < 2 } {
+    puts "\[ERROR\] No arguments provided!"
+    puts "Usage: ./mch_config.exp <ftp_server_address> <hostname_index>"
+    exit 1
+}
+
+set ipaddr [lindex $argv 0]
+set index [lindex $argv 1]
+
+#Connect to the MCH via serial port
+spawn cu -l /dev/ttyACM0 -s 19200
+match_max 100000
+expect "Connected.\r"
+
+#Send a bogus command to clear any garbage that may have been sent before or during connection
+send -- "\r"
+expect "nat> "
+
+#Change MCH hostname
+send -- "mchcfg\r"
+expect "*Enter configuration mode (RET=0/0x0):*"
+send -- "11\r"
+expect "*Enter host name:*"
+send -- "\010\010\010\010\010\010\010\010\010\010\010\010\010\010\010\010\010\010\010\010mch-bpm-$index\r"
+expect "*Enter configuration mode (RET=0/0x0):*"
+send -- "q\r"
+expect "nat> "
+
+#Update RTM Atmel release information
+send -- "diag\r"
+expect "*DIAG*"
+send -- "11\r"
+expect "*AVR*"
+send -- "5\r"
+expect "pw>"
+send -- "rosebud\r"
+expect "Choose AVR device*"
+send -- "5\r"
+expect "Enter type*"
+send -- "\r"
+expect "Enter serial number*"
+send -- "\r"
+expect "Enter release code (with preceding 0x)*"
+send -- "0x171113\r"
+expect "Enter PCB version*"
+send -- "\r"
+expect "*AVR*"
+send -- "q\r"
+expect "*DIAG*"
+send -- "q\r"
+expect "nat> "
+
+
+#Update clock configuration
+send -- "upload_cfg\r"
+expect ":>"
+send -- "$ipaddr:mch_clk_cfg.txt\r"
+expect "Set configuration from file?*"
+send -- "y\r"
+expect "Save configuration to FLASH memory?*"
+send -- "y\r"
+expect "nat> "
+
+#Reboot MCH
+send -- "reboot\r"
+
+#Close serial connection
+send -- "\r~."
+
+puts "MCH is configured correctly and is rebooting now!"

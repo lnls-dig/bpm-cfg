@@ -1,0 +1,196 @@
+#   HALCS configuration file
+
+# Device manager configurations
+dev_mngr
+    broker
+        bind = tcp://127.0.0.1:9999
+    log
+        dir = /media/remote_logs
+        filename = dev_mngr.log
+    verbose = 1             # Ask for a trace
+    daemonize = no          # Ask for daemonize process (options are: yes or no)
+    workdir = .             #   Working directory for daemon
+    spawn_broker = no       # Ask to spawn broker (options are: yes or no)
+
+# Device I/O configurations
+dev_io
+    board1
+        halcs0
+            dbe
+                spawn_epics_ioc = no        # Ask to spawn DBE EPICS IOC (Options are: yes or no)
+                fmc_board = fmc250m_4ch
+            afe
+                spawn_epics_ioc = no        # Ask to spawn AFE EPICS IOC (Options are: yes or no)
+                bind = <RFFE_BOARD1_HALCS0_IP>
+        halcs1
+            dbe
+                spawn_epics_ioc = no        # Ask to spawn DBE EPICS IOC (Options are: yes or no)
+                fmc_board = fmc250m_4ch
+            afe
+                spawn_epics_ioc = no        # Ask to spawn AFE EPICS IOC (Options are: yes or no)
+                bind = <RFFE_BOARD1_HALCS1_IP>
+    board2
+        halcs0
+            dbe
+                spawn_epics_ioc = no        # Ask to spawn DBE EPICS IOC (Options are: yes or no)
+                fmc_board = fmc250m_4ch
+            afe
+                spawn_epics_ioc = no        # Ask to spawn AFE EPICS IOC (Options are: yes or no)
+                bind = <RFFE_BOARD2_HALCS0_IP>
+        halcs1
+            dbe
+                spawn_epics_ioc = no        # Ask to spawn DBE EPICS IOC (Options are: yes or no)
+                fmc_board = fmc250m_4ch
+            afe
+                spawn_epics_ioc = no        # Ask to spawn AFE EPICS IOC (Options are: yes or no)
+                bind = <RFFE_BOARD2_HALCS1_IP>
+    board3
+        halcs0
+            dbe
+                spawn_epics_ioc = no        # Ask to spawn DBE EPICS IOC (Options are: yes or no)
+                fmc_board = fmc250m_4ch
+            afe
+                spawn_epics_ioc = no        # Ask to spawn AFE EPICS IOC (Options are: yes or no)
+                bind = <RFFE_BOARD3_HALCS0_IP>
+        halcs1
+            dbe
+                spawn_epics_ioc = no        # Ask to spawn DBE EPICS IOC (Options are: yes or no)
+                fmc_board = fmc250m_4ch
+            afe
+                spawn_epics_ioc = no        # Ask to spawn AFE EPICS IOC (Options are: yes or no)
+                bind = <RFFE_BOARD3_HALCS1_IP>
+    board4
+        halcs0
+            dbe
+                spawn_epics_ioc = no        # Ask to spawn DBE EPICS IOC (Options are: yes or no)
+                fmc_board = fmc250m_4ch
+            afe
+                spawn_epics_ioc = no        # Ask to spawn AFE EPICS IOC (Options are: yes or no)
+                bind = <RFFE_BOARD4_HALCS0_IP>
+        halcs1
+            dbe
+                spawn_epics_ioc = no        # Ask to spawn DBE EPICS IOC (Options are: yes or no)
+                fmc_board = fmc250m_4ch
+            afe
+                spawn_epics_ioc = no        # Ask to spawn AFE EPICS IOC (Options are: yes or no)
+                bind = <RFFE_BOARD4_HALCS1_IP>
+    board5
+        halcs0
+            dbe
+                spawn_epics_ioc = no        # Ask to spawn DBE EPICS IOC (Options are: yes or no)
+                fmc_board = fmc250m_4ch
+            afe
+                spawn_epics_ioc = no        # Ask to spawn AFE EPICS IOC (Options are: yes or no)
+                bind = <RFFE_BOARD5_HALCS0_IP>
+        halcs1
+            dbe
+                spawn_epics_ioc = no        # Ask to spawn DBE EPICS IOC (Options are: yes or no)
+                fmc_board = fmc250m_4ch
+            afe
+                spawn_epics_ioc = no        # Ask to spawn AFE EPICS IOC (Options are: yes or no)
+                bind = <RFFE_BOARD5_HALCS1_IP>
+    board6
+        halcs0
+            dbe
+                spawn_epics_ioc = no        # Ask to spawn DBE EPICS IOC (Options are: yes or no)
+                fmc_board = fmc250m_4ch
+            afe
+                spawn_epics_ioc = no        # Ask to spawn AFE EPICS IOC (Options are: yes or no)
+                bind = <RFFE_BOARD6_HALCS0_IP>
+        halcs1
+            dbe
+                spawn_epics_ioc = no        # Ask to spawn DBE EPICS IOC (Options are: yes or no)
+                fmc_board = fmc250m_4ch
+            afe
+                spawn_epics_ioc = no        # Ask to spawn AFE EPICS IOC (Options are: yes or no)
+                bind = <RFFE_BOARD6_HALCS1_IP>
+    board7
+        halcs0
+            dbe
+                spawn_epics_ioc = no        # Ask to spawn DBE EPICS IOC (Options are: yes or no)
+                fmc_board = fmc250m_4ch
+            afe
+                spawn_epics_ioc = no        # Ask to spawn AFE EPICS IOC (Options are: yes or no)
+                bind = <RFFE_BOARD7_HALCS0_IP>
+        halcs1
+            dbe
+                spawn_epics_ioc = no        # Ask to spawn DBE EPICS IOC (Options are: yes or no)
+                fmc_board = fmc250m_4ch
+            afe
+                spawn_epics_ioc = no        # Ask to spawn AFE EPICS IOC (Options are: yes or no)
+                bind = <RFFE_BOARD7_HALCS1_IP>
+    board8
+        halcs0
+            dbe
+                spawn_epics_ioc = no        # Ask to spawn DBE EPICS IOC (Options are: yes or no)
+                fmc_board = fmc250m_4ch
+            afe
+                spawn_epics_ioc = no        # Ask to spawn AFE EPICS IOC (Options are: yes or no)
+                bind = <RFFE_BOARD8_HALCS0_IP>
+        halcs1
+            dbe
+                spawn_epics_ioc = no        # Ask to spawn DBE EPICS IOC (Options are: yes or no)
+                fmc_board = fmc250m_4ch
+            afe
+                spawn_epics_ioc = no        # Ask to spawn AFE EPICS IOC (Options are: yes or no)
+                bind = <RFFE_BOARD8_HALCS1_IP>
+    board9
+        halcs0
+            dbe
+                spawn_epics_ioc = no        # Ask to spawn DBE EPICS IOC (Options are: yes or no)
+                fmc_board = fmc250m_4ch
+            afe
+                spawn_epics_ioc = no        # Ask to spawn AFE EPICS IOC (Options are: yes or no)
+                bind = <RFFE_BOARD9_HALCS0_IP>
+        halcs1
+            dbe
+                spawn_epics_ioc = no        # Ask to spawn DBE EPICS IOC (Options are: yes or no)
+                fmc_board = fmc250m_4ch
+            afe
+                spawn_epics_ioc = no        # Ask to spawn AFE EPICS IOC (Options are: yes or no)
+                bind = <RFFE_BOARD9_HALCS1_IP>
+    board10
+        halcs0
+            dbe
+                spawn_epics_ioc = no        # Ask to spawn DBE EPICS IOC (Options are: yes or no)
+                fmc_board = fmc250m_4ch
+            afe
+                spawn_epics_ioc = no        # Ask to spawn AFE EPICS IOC (Options are: yes or no)
+                bind = <RFFE_BOARD10_HALCS0_IP>
+        halcs1
+            dbe
+                spawn_epics_ioc = no        # Ask to spawn DBE EPICS IOC (Options are: yes or no)
+                fmc_board = fmc250m_4ch
+            afe
+                spawn_epics_ioc = no        # Ask to spawn AFE EPICS IOC (Options are: yes or no)
+                bind = <RFFE_BOARD10_HALCS1_IP>
+    board11
+        halcs0
+            dbe
+                spawn_epics_ioc = no        # Ask to spawn DBE EPICS IOC (Options are: yes or no)
+                fmc_board = fmc250m_4ch
+            afe
+                spawn_epics_ioc = no        # Ask to spawn AFE EPICS IOC (Options are: yes or no)
+                bind = <RFFE_BOARD11_HALCS0_IP>
+        halcs1
+            dbe
+                spawn_epics_ioc = no        # Ask to spawn DBE EPICS IOC (Options are: yes or no)
+                fmc_board = fmc250m_4ch
+            afe
+                spawn_epics_ioc = no        # Ask to spawn AFE EPICS IOC (Options are: yes or no)
+                bind = <RFFE_BOARD11_HALCS1_IP>
+    board12
+        halcs0
+            dbe
+                spawn_epics_ioc = no        # Ask to spawn DBE EPICS IOC (Options are: yes or no)
+                fmc_board = fmc250m_4ch
+            afe
+                spawn_epics_ioc = no        # Ask to spawn AFE EPICS IOC (Options are: yes or no)
+                bind = <RFFE_BOARD12_HALCS0_IP>
+        halcs1
+            dbe
+                spawn_epics_ioc = no        # Ask to spawn DBE EPICS IOC (Options are: yes or no)
+                fmc_board = fmc250m_4ch
+            afe
+                spawn_epics_ioc = no        # Ask to spawn AFE EPICS IOC (Options are: yes or no)
+                bind = <RFFE_BOARD12_HALCS1_IP>
