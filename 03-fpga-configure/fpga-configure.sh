@@ -24,9 +24,9 @@ while true; do sudo -n true; sleep 60; kill -0 "$$" || \
     exit; done 2>/dev/null &
 
 ## Install packages
-#sudo apt-get update && \
-#sudo apt-get install -y \
-#    curl
+sudo apt-get update && \
+sudo apt-get install -y \
+    curl
 
 # Download bitstreams
 mkdir -p ${FPGA_BITSTREAMS_DIR}
