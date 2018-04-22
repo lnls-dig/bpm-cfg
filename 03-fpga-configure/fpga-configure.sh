@@ -28,13 +28,14 @@ sudo apt-get update && \
 sudo apt-get install -y \
     curl
 
+BITSTREAM_SUFFIX=.bit
 # Download bitstreams
 mkdir -p ${FPGA_BITSTREAMS_DIR}
 for i in `seq 0 $((${#URL_FPGA_ALL[@]}-1))`; do
     if [ ! -z ${URL_FPGA_ALL[i]} ]; then
         bash -c "\
             cd ${FPGA_BITSTREAMS_DIR} && \
-            curl -L ${URL_FPGA_ALL[i]} > ${FPGA_BITSTREAMS_ALL[i]} \
+            curl -L ${URL_FPGA_ALL[i]}${BITSTREAM_SUFFIX} > ${FPGA_BITSTREAMS_ALL[i]}${BITSTREAM_SUFFIX} \
         "
     fi
 done
