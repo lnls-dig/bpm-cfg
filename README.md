@@ -19,3 +19,11 @@ For example:
 For example:
 
     ./03-fpga-configure/fpga-configure.sh 10.0.18.60 9
+
+### 4. Run script inside 04-cpu-check to check CPU status
+
+    ./04-cpu-check/cpu-check.sh <CPU IP> <Slot Number> <CPU Root password>
+
+For example:
+
+    ./04-cpu-check/cpu-check.sh 10.0.18.55 1 root-pass
