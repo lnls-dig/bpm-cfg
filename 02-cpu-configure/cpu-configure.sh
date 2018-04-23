@@ -9,7 +9,9 @@ SCRIPTPATH="$( cd "$( dirname "${BASH_SOURCE[0]}"  )" && pwd  )"
 
 IP="$1"
 HOSTANAME_SUFFIX="$2"
-CRATE_NUMBER="$3"
+CRATE_NUMBER_="$3"
+# Remove leading zeros
+CRATE_NUMBER="$(echo ${CRATE_NUMBER_} | sed 's/^0*//')"
 SSHPASS_USR="$4"
 
 HOSTANAME_PREFIX="cpu-bpm"

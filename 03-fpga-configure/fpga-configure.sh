@@ -14,7 +14,9 @@ MCH_PORT_BASE=2540
 . ${SCRIPTPATH}/fpga-bitstreams.sh
 
 MCH_IP="$1"
-CRATE_NUMBER="$2"
+CRATE_NUMBER_="$2"
+# Remove leading zeros
+CRATE_NUMBER="$(echo ${CRATE_NUMBER_} | sed 's/^0*//')"
 
 # Ask sudo password only once and
 # keep updating sudo timestamp to
