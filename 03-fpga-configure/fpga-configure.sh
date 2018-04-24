@@ -17,10 +17,20 @@ MCH_PORT_BASE=2540
 # Source common functions
 . ${SCRIPTPATH}/../misc/functions.sh
 
+set +u
+
 MCH_IP="$1"
 CRATE_NUMBER_="$2"
 # Remove leading zeros
 CRATE_NUMBER="$(echo ${CRATE_NUMBER_} | sed 's/^0*//')"
+
+set -u
+
+# Simple argument checking
+if [ $# -lt 2 ]; then
+    echo "Usage: ./fpga-configure.sh <MCH IP> <Crate Number>"
+    exit 1
+fi
 
 ## Ask sudo password only once and
 ## keep updating sudo timestamp to
