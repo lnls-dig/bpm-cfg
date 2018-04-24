@@ -4,7 +4,7 @@
 # using the vivado-prog.py script. It does not aim to be generic,
 # but to provide a starting point for more complex scripts
 
-set -euxo pipefail
+set -euo pipefail
 
 MCH_IP=$1
 # This must follow the format "<port_number>,<bitstream_name_without_extension>"
