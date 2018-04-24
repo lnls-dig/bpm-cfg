@@ -37,6 +37,7 @@ BPM_HALCS_CFG_TEMPLATE_OUT_FILE="${SCRIPTPATH}/halcs.cfg"
 BPM_EPICS_CFG_FILE="/etc/sysconfig/bpm-epics-ioc"
 BPM_HALCS_CFG_FILE="/usr/local/etc/halcs/halcs.cfg"
 TIM_RX_EPICS_CFG_FILE="/etc/sysconfig/tim-rx-epics-ioc"
+HOSTNAME="cpu-bpm-${CRATE_NUMBER}"
 
 ## Ask sudo password only once and
 ## keep updating sudo timestamp to
@@ -76,7 +77,7 @@ SSHPASS="${SSHPASS_USR}" sshpass -e \
     root@${IP} \
     bash -c "\
         echo \"\" > /etc/hostname && \
-        sysctl kernel.hostname=${HOSTANAME} > /dev/null && \
+        sysctl kernel.hostname=${HOSTNAME} > /dev/null && \
         sed -i -e \"\
             { \
                 s|EPICS_PV_CRATE_PREFIX=.*\$|EPICS_PV_CRATE_PREFIX=${CRATE}|; \
