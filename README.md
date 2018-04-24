@@ -30,8 +30,8 @@ For example:
 
 ### 4. Run script inside 04-cpu-check to check CPU status
 
-    ./04-cpu-check/cpu-check.sh <CPU IP> <CPU Root password> <Crate Number>
+    ./04-cpu-check/cpu-check.sh <CPU IP> <Crate Number> <CPU Root password>
 
 For example, for testing the link of boards in crate 9:
 
-    ./04-cpu-check/cpu-check.sh 10.0.18.55 root-pass 9
+    ./04-cpu-check/cpu-check.sh 10.0.18.55 9 root-pass
