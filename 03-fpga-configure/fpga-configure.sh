@@ -32,7 +32,7 @@ CRATE_NUMBER="$(echo ${CRATE_NUMBER_} | sed 's/^0*//')"
 ### Install packages
 #sudo apt-get update && \
 #sudo apt-get install -y \
-#    curl
+#    wget
 
 exec_cmd "INFO  " echo "Download bitstreams..."
 
