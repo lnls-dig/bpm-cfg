@@ -6,19 +6,38 @@ proc send {ignore arg} {
     exp_send -s -- $arg
 }
 
-if { $argc < 2 } {
+if { $argc < 3 } {
     puts "\[ERROR\] No arguments provided!"
-    puts "Usage: ./mch_config.exp <ftp_server_address> <hostname_index>"
+    puts "Usage: ./mch_config.exp <type> [<mch_ip> <mch_password>] <ftp_server_address> <hostname_index>"
     exit 1
 }
 
-set ipaddr [lindex $argv 0]
-set index [lindex $argv 1]
+set type [lindex $argv 0]
 
-#Connect to the MCH via serial port
-spawn cu -l /dev/ttyACM0 -s 19200
-match_max 100000
-expect "Connected.\r"
+if { [string equal "$type" "ssh"] } {
+    set mchipaddr [lindex $argv 1]
+    set mchpass [lindex $argv 2]
+    set ipaddr [lindex $argv 3]
+    set index [lindex $argv 4]
+} elseif { [string equal "$type" "serial"] } {
+    set ipaddr [lindex $argv 1]
+    set index [lindex $argv 2]
+} else {
+    puts "Invalid <type> argument. Options are: \"ssh\" \"serial\""
+    exit 1
+}
+
+
+if { [string equal "$type" "ssh"] } {
+    spawn ssh root@$mchipaddr
+    expect "root@$mchipaddr's password:*"
+    send -- "$mchpass\r"
+} elseif { [string equal "$type" "serial"] } {
+    #Connect to the MCH via serial port
+    spawn cu -l /dev/ttyACM0 -s 19200
+    match_max 100000
+    expect "Connected.\r"
+}
 
 #Send a bogus command to clear any garbage that may have been sent before or during connection
 send -- "\r"
