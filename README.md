@@ -22,8 +22,8 @@ For example:
 
 ### 4. Run script inside 04-cpu-check to check CPU status
 
-    ./04-cpu-check/cpu-check.sh <CPU IP> <CPU Root password> <Slot Numbers>
+    ./04-cpu-check/cpu-check.sh <CPU IP> <CPU Root password> <Crate Number>
 
-For example, for testing the link of boards 1, 2 and 3:
+For example, for testing the link of boards in crate 3:
 
-    ./04-cpu-check/cpu-check.sh 10.0.18.55 root-pass 1 2 3
+    ./04-cpu-check/cpu-check.sh 10.0.18.55 root-pass 3
