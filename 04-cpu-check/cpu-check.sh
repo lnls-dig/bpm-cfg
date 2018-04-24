@@ -3,6 +3,10 @@
 set -euo pipefail
 
 SCRIPTPATH="$( cd "$( dirname "${BASH_SOURCE[0]}"  )" && pwd  )"
+
+# Source common functions
+. ${SCRIPTPATH}/../misc/functions.sh
+
 MAPPING_DIR="03-fpga-configure"
 MAPPING_FILE="crate-fpga-mapping.sh"
 
@@ -15,6 +19,8 @@ CRATE_NUMBER="$(echo ${CRATE_NUMBER_} | sed 's/^0*//')"
 # Source mapping file
 . ${SCRIPTPATH}/../${MAPPING_DIR}/${MAPPING_FILE}
 
+exec_cmd "TRACE" echo "Reading Crate #${CRATE_NUMBER} FPGA mapping..."
+
 # Get board numbers from crate-mapping.sh file
 BPM_MAX_NUM_BOARDS=12
 BPM_FPGA_AVAILABLE=()
@@ -26,5 +32,7 @@ for i in `seq 1 ${BPM_MAX_NUM_BOARDS}`; do
         BPM_FPGA_AVAILABLE+=("$i")
     fi
 done
+
+exec_cmd "INFO " echo "Boards slots to check: ${BPM_FPGA_AVAILABLE[@]}"
 
 ${SCRIPTPATH}/cpu-check-raw.sh ${IP} ${SSHPASS_USR} ${BPM_FPGA_AVAILABLE[@]}

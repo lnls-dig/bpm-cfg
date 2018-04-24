@@ -4,6 +4,9 @@ set -euo pipefail
 
 SCRIPTPATH="$( cd "$( dirname "${BASH_SOURCE[0]}"  )" && pwd  )"
 
+# Source common functions
+. ${SCRIPTPATH}/../misc/functions.sh
+
 IP="$1"
 SSHPASS_USR="$2"
 shift 2
@@ -15,17 +18,18 @@ SSHPASS="${SSHPASS_USR}" sshpass -e \
     root@${IP} \
     bash -c "\
         true && \
+        $(typeset -f exec_cmd);
         for board in "${BOARD_NUMBERS[@]}"; do \
             if [[ \$(ls /dev | grep fpga-\${board}) ]]; then \
-                echo \"Board number \${board} PCIe Link: YES\"
+                exec_cmd \"INFO \" echo \"Board number \${board} PCIe Link: YES\"
             else \
-                echo \"Board number \${board} PCIe Link: NO\"
+                exec_cmd \"ERR  \" echo \"Board number \${board} PCIe Link: NO\"
                 ERRS[\${board}]=\${board}
             fi
         done && \
         if [[ \"\${ERRS[@]}\" ]]; then \
-            echo \"ERROR: Boards \${ERRS[@]} do not have PCIe link\"
+            exec_cmd \"ERR  \" echo \"Boards \${ERRS[@]} do not have PCIe link\"
         else
-            echo \"SUCCESS: All boards have PCIe Link\"
+            exec_cmd \"INFO \" echo \"All boards have PCIe Link\"
         fi \
     "
