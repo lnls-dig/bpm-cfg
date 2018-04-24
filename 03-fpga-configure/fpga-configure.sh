@@ -44,9 +44,12 @@ for i in `seq 0 $((${#URL_FPGA_ALL[@]}-1))`; do
         bash -c "\
             SCRIPTPATH=\"\$( cd \"\$( dirname ${BASH_SOURCE[0]}  )\" && pwd  )\" && \
             . \${SCRIPTPATH}/../misc/functions.sh && \
-            cd ${FPGA_BITSTREAMS_DIR} && \
-            exec_cmd \"TRACE \" curl -L ${URL_FPGA_ALL[i]}${BITSTREAM_SUFFIX} > \
-                ${FPGA_BITSTREAMS_ALL[i]}${BITSTREAM_SUFFIX} \
+            cd ${FPGA_BITSTREAMS_DIR}; \
+            if [ ! -f ${FPGA_BITSTREAMS_ALL[$i]}${BITSTREAM_SUFFIX} ]; then
+                exec_cmd \"TRACE \" wget -O \
+                    ${FPGA_BITSTREAMS_ALL[$i]}${BITSTREAM_SUFFIX} \
+                    ${URL_FPGA_ALL[$i]}${BITSTREAM_SUFFIX}
+            fi \
         "
     fi
 done
