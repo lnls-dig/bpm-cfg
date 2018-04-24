@@ -10,8 +10,12 @@ MCH_PORT_BASE=2540
 
 # Source FPGA mapping
 . ${SCRIPTPATH}/crate-fpga-mapping.sh
+
 # Source FPGA bitstreams
 . ${SCRIPTPATH}/fpga-bitstreams.sh
+
+# Source common functions
+. ${SCRIPTPATH}/../misc/functions.sh
 
 MCH_IP="$1"
 CRATE_NUMBER_="$2"
@@ -30,17 +34,24 @@ CRATE_NUMBER="$(echo ${CRATE_NUMBER_} | sed 's/^0*//')"
 #sudo apt-get install -y \
 #    curl
 
+exec_cmd "INFO  " echo "Download bitstreams..."
+
 BITSTREAM_SUFFIX=.bit
 # Download bitstreams
 mkdir -p ${FPGA_BITSTREAMS_DIR}
 for i in `seq 0 $((${#URL_FPGA_ALL[@]}-1))`; do
     if [ ! -z ${URL_FPGA_ALL[i]} ]; then
         bash -c "\
+            SCRIPTPATH=\"\$( cd \"\$( dirname ${BASH_SOURCE[0]}  )\" && pwd  )\" && \
+            . \${SCRIPTPATH}/../misc/functions.sh && \
             cd ${FPGA_BITSTREAMS_DIR} && \
-            curl -L ${URL_FPGA_ALL[i]}${BITSTREAM_SUFFIX} > ${FPGA_BITSTREAMS_ALL[i]}${BITSTREAM_SUFFIX} \
+            exec_cmd \"TRACE \" curl -L ${URL_FPGA_ALL[i]}${BITSTREAM_SUFFIX} > \
+                ${FPGA_BITSTREAMS_ALL[i]}${BITSTREAM_SUFFIX} \
         "
     fi
 done
+
+exec_cmd "INFO  " echo "Flashing FPGA Gateware of all boards..."
 
 BPM_MAX_NUM_BOARDS=12
 for i in `seq 1 ${BPM_MAX_NUM_BOARDS}`; do
@@ -66,7 +77,7 @@ for i in `seq 1 ${BPM_MAX_NUM_BOARDS}`; do
             continue
         ;;
         *)
-            echo "Invalid FPGA bitstream type: ${bpm_crate_fpga}" >&2
+            exec_cmd "ERR  " echo "Invalid FPGA bitstream type: ${bpm_crate_fpga}" >&2
             exit 1
         ;;
     esac
