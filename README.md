@@ -32,6 +32,6 @@ For example:
 
     ./04-cpu-check/cpu-check.sh <CPU IP> <CPU Root password> <Crate Number>
 
-For example, for testing the link of boards in crate 3:
+For example, for testing the link of boards in crate 9:
 
-    ./04-cpu-check/cpu-check.sh 10.0.18.55 root-pass 3
+    ./04-cpu-check/cpu-check.sh 10.0.18.55 root-pass 9
