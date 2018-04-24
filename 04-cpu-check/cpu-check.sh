@@ -10,11 +10,21 @@ SCRIPTPATH="$( cd "$( dirname "${BASH_SOURCE[0]}"  )" && pwd  )"
 MAPPING_DIR="03-fpga-configure"
 MAPPING_FILE="crate-fpga-mapping.sh"
 
+set +u
+
 IP="$1"
 SSHPASS_USR="$2"
 CRATE_NUMBER_="$3"
 # Remove leading zeros
 CRATE_NUMBER="$(echo ${CRATE_NUMBER_} | sed 's/^0*//')"
+
+set -u
+
+# Simple argument checking
+if [ $# -lt 3 ]; then
+    echo "Usage: ./cpu-check.sh <CPU IP> <Crate Number> <CPU SSH root password>"
+    exit 1
+fi
 
 # Source mapping file
 . ${SCRIPTPATH}/../${MAPPING_DIR}/${MAPPING_FILE}
