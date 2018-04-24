@@ -18,17 +18,17 @@ CRATE_NUMBER_="$2"
 # Remove leading zeros
 CRATE_NUMBER="$(echo ${CRATE_NUMBER_} | sed 's/^0*//')"
 
-# Ask sudo password only once and
-# keep updating sudo timestamp to
-# avoid asking again
-sudo -v
-while true; do sudo -n true; sleep 60; kill -0 "$$" || \
-    exit; done 2>/dev/null &
-
-## Install packages
-sudo apt-get update && \
-sudo apt-get install -y \
-    curl
+## Ask sudo password only once and
+## keep updating sudo timestamp to
+## avoid asking again
+#sudo -v
+#while true; do sudo -n true; sleep 60; kill -0 "$$" || \
+#    exit; done 2>/dev/null &
+#
+### Install packages
+#sudo apt-get update && \
+#sudo apt-get install -y \
+#    curl
 
 BITSTREAM_SUFFIX=.bit
 # Download bitstreams
