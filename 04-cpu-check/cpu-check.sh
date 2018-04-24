@@ -13,10 +13,10 @@ MAPPING_FILE="crate-fpga-mapping.sh"
 set +u
 
 IP="$1"
-SSHPASS_USR="$2"
-CRATE_NUMBER_="$3"
+CRATE_NUMBER_="$2"
 # Remove leading zeros
 CRATE_NUMBER="$(echo ${CRATE_NUMBER_} | sed 's/^0*//')"
+SSHPASS_USR="$3"
 
 set -u
 
