@@ -10,12 +10,22 @@ SCRIPTPATH="$( cd "$( dirname "${BASH_SOURCE[0]}"  )" && pwd  )"
 # Source common functions
 . ${SCRIPTPATH}/../misc/functions.sh
 
+set +u
+
 IP="$1"
 HOSTANAME_SUFFIX="$2"
 CRATE_NUMBER_="$3"
 # Remove leading zeros
 CRATE_NUMBER="$(echo ${CRATE_NUMBER_} | sed 's/^0*//')"
 SSHPASS_USR="$4"
+
+set -u
+
+# Simple argument checking
+if [ $# -lt 4 ]; then
+    echo "Usage: ./cpu-configure.sh <CPU IP> <CPU Hostname Suffix> <Crate Number> <CPU SSH password>"
+    exit 1
+fi
 
 HOSTANAME_PREFIX="cpu-bpm"
 HOSTANAME="${HOSTANAME_PREFIX}"-${HOSTANAME_SUFFIX}
