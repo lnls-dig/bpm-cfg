@@ -4,6 +4,14 @@
 
 ### 1. Run scripts inside 01-mch-configure to configure the MCH
 
+    ./01-mch-configure/serial-config.sh
+    ./01-mch-configure/mch-config.exp <MCH IP> <MCH Hostname Suffix>
+
+For example:
+
+    ./01-mch-configure/serial-config.sh
+    ./01-mch-configure/mch-config.exp 10.0.18.60 09
+
 ### 2. Run scripts inside 02-cpu-configure to configure the CPU
 
     ./02-cpu-configure/cpu-configure.sh <CPU IP> <Hostname Suffix> <Crate Number> <CPU Root password>
