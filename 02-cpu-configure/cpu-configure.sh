@@ -7,6 +7,9 @@ SCRIPTPATH="$( cd "$( dirname "${BASH_SOURCE[0]}"  )" && pwd  )"
 # Source RFFE mapping IPs
 . ${SCRIPTPATH}/bpm-rffe-mapping.sh
 
+# Source common functions
+. ${SCRIPTPATH}/../misc/functions.sh
+
 IP="$1"
 HOSTANAME_SUFFIX="$2"
 CRATE_NUMBER_="$3"
@@ -38,6 +41,9 @@ TIM_RX_EPICS_CFG_FILE="/etc/sysconfig/tim-rx-epics-ioc"
 #    openssh-client \
 #    sshpass
 
+
+exec_cmd "TRACE" echo "Generating BPM RFFE IP mapping file..."
+
 # Generate HALCS config from template
 BPM_MAX_NUM_BOARDS=12
 BPM_MAX_NUM_HALCS=2
@@ -51,13 +57,16 @@ for board in `seq 1 ${BPM_MAX_NUM_BOARDS}`; do
     done
 done
 
+
+exec_cmd "TRACE" echo "Modifying EPICS PV prefixes..."
+
 # Login via SSH and setup configuration files
 SSHPASS="${SSHPASS_USR}" sshpass -e \
     ssh -o StrictHostKeyChecking=no \
     root@${IP} \
     bash -c "\
         echo \"\" > /etc/hostname && \
-        sysctl kernel.hostname=${HOSTANAME} && \
+        sysctl kernel.hostname=${HOSTANAME} > /dev/null && \
         sed -i -e \"\
             { \
                 s|EPICS_PV_CRATE_PREFIX=.*\$|EPICS_PV_CRATE_PREFIX=${CRATE}|; \
@@ -68,7 +77,11 @@ SSHPASS="${SSHPASS_USR}" sshpass -e \
             }\" ${TIM_RX_EPICS_CFG_FILE} \
     "
 
+exec_cmd "TRACE" echo "Copying generated files to CPU..."
+
 SSHPASS="${SSHPASS_USR}" sshpass -e \
     scp \
     ${BPM_HALCS_CFG_TEMPLATE_OUT_FILE} \
     root@${IP}:${BPM_HALCS_CFG_FILE}
+
+exec_cmd "INFO " echo "CPU Configured Successfully!"
