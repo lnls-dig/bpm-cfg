@@ -3,26 +3,28 @@
 set -euo pipefail
 
 SCRIPTPATH="$( cd "$( dirname "${BASH_SOURCE[0]}"  )" && pwd  )"
+MAPPING_DIR="03-fpga-configure"
+MAPPING_FILE="crate-fpga-mapping.sh"
 
 IP="$1"
 SSHPASS_USR="$2"
-shift 2
-BOARD_NUMBERS=("$@")
+CRATE_NUMBER_="$3"
+# Remove leading zeros
+CRATE_NUMBER="$(echo ${CRATE_NUMBER_} | sed 's/^0*//')"
 
-# Login via SSH and check CPU
-SSHPASS="${SSHPASS_USR}" sshpass -e \
-    ssh -o StrictHostKeyChecking=no \
-    root@${IP} \
-    bash -c "\
-        true && \
-        for board in "${BOARD_NUMBERS[@]}"; do \
-            if [[ \$(ls /dev | grep fpga-\${board}) ]]; then \
-                echo \"Board number \${board} PCIe Link: YES\"
-            else \
-                echo \"Board number \${board} PCIe Link: NO\"
-                echo \"Board \${board} does not have PCIe Link\"
-                exit 1;
-            fi
-        done && \
-        echo \"All boards have PCIe Link\" \
-    "
+# Source mapping file
+. ${SCRIPTPATH}/../${MAPPING_DIR}/${MAPPING_FILE}
+
+# Get board numbers from crate-mapping.sh file
+BPM_MAX_NUM_BOARDS=12
+BPM_FPGA_AVAILABLE=()
+for i in `seq 1 ${BPM_MAX_NUM_BOARDS}`; do
+    BPM_CRATE_FPGA_="BPM_CRATE_${CRATE_NUMBER}_FPGA[$i]"
+    BPM_CRATE_FPGA="${!BPM_CRATE_FPGA_}"
+
+    if [ ! -z "${BPM_CRATE_FPGA}" ]; then
+        BPM_FPGA_AVAILABLE+=("$i")
+    fi
+done
+
+${SCRIPTPATH}/cpu-check-raw.sh ${IP} ${SSHPASS_USR} ${BPM_FPGA_AVAILABLE[@]}
