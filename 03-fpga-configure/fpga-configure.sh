@@ -40,7 +40,7 @@ BITSTREAM_SUFFIX=.bit
 # Download bitstreams
 mkdir -p ${FPGA_BITSTREAMS_DIR}
 for i in `seq 0 $((${#URL_FPGA_ALL[@]}-1))`; do
-    if [ ! -z ${URL_FPGA_ALL[i]} ]; then
+    if [ ! -z ${URL_FPGA_ALL[$i]} ]; then
         bash -c "\
             SCRIPTPATH=\"\$( cd \"\$( dirname ${BASH_SOURCE[0]}  )\" && pwd  )\" && \
             . \${SCRIPTPATH}/../misc/functions.sh && \
