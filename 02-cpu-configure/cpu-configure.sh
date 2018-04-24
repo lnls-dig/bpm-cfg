@@ -25,18 +25,18 @@ BPM_EPICS_CFG_FILE="/etc/sysconfig/bpm-epics-ioc"
 BPM_HALCS_CFG_FILE="/usr/local/etc/halcs/halcs.cfg"
 TIM_RX_EPICS_CFG_FILE="/etc/sysconfig/tim-rx-epics-ioc"
 
-# Ask sudo password only once and
-# keep updating sudo timestamp to
-# avoid asking again
-sudo -v
-while true; do sudo -n true; sleep 60; kill -0 "$$" || \
-    exit; done 2>/dev/null &
-
-# Install packages
-sudo apt-get update && \
-sudo apt-get install -y \
-    openssh-client \
-    sshpass
+## Ask sudo password only once and
+## keep updating sudo timestamp to
+## avoid asking again
+#sudo -v
+#while true; do sudo -n true; sleep 60; kill -0 "$$" || \
+#    exit; done 2>/dev/null &
+#
+## Install packages
+#sudo apt-get update && \
+#sudo apt-get install -y \
+#    openssh-client \
+#    sshpass
 
 # Generate HALCS config from template
 BPM_MAX_NUM_BOARDS=12
