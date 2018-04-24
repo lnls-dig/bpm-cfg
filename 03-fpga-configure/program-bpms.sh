@@ -12,6 +12,9 @@ PORT_BITSTREAM="$2"
 
 SCRIPTPATH="$( cd "$( dirname "${BASH_SOURCE[0]}"  )" && pwd  )"
 
+# Source common functions
+. ${SCRIPTPATH}/../misc/functions.sh
+
 BIT_EXTENSION=.bit
 MCS_EXTENSION=.mcs
 
@@ -23,24 +26,31 @@ for portbit in ${PORT_BITSTREAM[*]}; do
     bitstream_raw=$2
 
     if [ "${bitstream_raw}" ]; then
-        echo "Programming AFC located in port: "${port}
+        exec_cmd "INFO " echo "Programming AFC located in port: "${port}
 
         # Bitstream/MCS names
         bitstream_bit=${bitstream_raw}${BIT_EXTENSION}
         bitstream_mcs=${bitstream_raw}${MCS_EXTENSION}
 
-        echo "Using bitstream: " ${bitstream_bit}
-        echo "Using mcs: " ${bitstream_mcs}
+        exec_cmd "INFO " echo "Using bitstream: " ${bitstream_bit}
+        exec_cmd "INFO " echo "Using mcs: " ${bitstream_mcs}
 
         bash -c "\
-            cd ${SCRIPTPATH}/../foreign/fpga-programming/ && \
+            SCRIPTPATH=\"\$( cd \"\$( dirname ${BASH_SOURCE[0]}  )\" && pwd  )\" && \
+            . \${SCRIPTPATH}/../misc/functions.sh && \
+            cd \${SCRIPTPATH}/../foreign/fpga-programming/ && \
             time ./vivado-prog.py \
             --bit_to_mcs \
             --bit=${bitstream_bit} \
             --mcs=${bitstream_mcs} \
             --svf=./afc-scansta.svf \
             --prog_flash \
-            --host_url=${MCH_IP}:${port} \
+            --host_url=${MCH_IP}:${port}; \
+            if [ \$? -eq 0 ]; then
+                exec_cmd \"INFO \" echo \"FPGA gateware successfully programmed\"
+            else
+                exec_cmd \"ERR  \" echo \"FPGA gateware programming error!\"
+            fi
         "
     fi
 
