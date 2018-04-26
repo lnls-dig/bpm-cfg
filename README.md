@@ -33,3 +33,11 @@ For example:
 For example, for testing the link of boards in crate 9:
 
     ./04-cpu-check/cpu-check.sh 10.0.18.55 9 root-pass
+
+### 5. Run script inside 05-bpm-test to test BPMs
+
+    ./05-bpm-test/bpm-tests.sh <Crate Number> <Destination folder for test results>
+
+For example, for testing the bpm in crate 9:
+
+    ./05-bpm-test/bpm-tests.sh 9 ~/results_test_no_signal
