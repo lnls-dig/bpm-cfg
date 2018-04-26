@@ -91,6 +91,14 @@ expect "Save configuration to FLASH memory?*"
 send -- "y\r"
 expect "nat> "
 
+
+# Update MCH Firmware version
+send -- "update_firmware\r"
+expect ":>"
+send -- "$ipaddr:mch_fw.bin\r"
+expect "nat> "
+
+
 #Reboot MCH
 send -- "reboot\r"
 
