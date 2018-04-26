@@ -43,4 +43,4 @@ ${SCRIPTPATH}/serial-config.sh
 exec_cmd "INFO  " echo "Configuring MCH..."
 
 # Call actual MCH config script
-${SCRIPTPATH}/mch-config.exp "${MCH_CONFIG_ARGS}"
+${SCRIPTPATH}/mch-config.exp ${MCH_CONFIG_ARGS}
