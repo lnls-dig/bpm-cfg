@@ -1,3 +1,6 @@
 [submodule "foreign/fpga-programming"]
 	path = foreign/fpga-programming
 	url = https://github.com/lnls-dig/fpga-programming.git
+[submodule "foreign/bpm-tests"]
+	path = foreign/bpm-tests
+	url = https://github.com/lnls-dig/bpm-tests
