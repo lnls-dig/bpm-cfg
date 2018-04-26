@@ -16,7 +16,7 @@ MCH_CONFIG_ARGS="$@"
 MCH_FIRMWARES_DIR_REL=firmwares
 MCH_FIRMWARES_DIR=${SCRIPTPATH}/${MCH_FIRMWARES_DIR_REL}
 
-exec_cmd "INFO  " echo "Downloading MCH Firmware..."
+exec_cmd "INFO " echo "Downloading MCH Firmware..."
 
 mkdir -p ${MCH_FIRMWARES_DIR}
 # Just copy the mch_fw.bin to firmwares folder
@@ -35,12 +35,12 @@ for i in `seq 0 $((${#URL_MCH_FIRMWARES_ALL[@]}-1))`; do
     fi
 done
 
-exec_cmd "INFO  " echo "Setting up TFTP server..."
+exec_cmd "INFO " echo "Setting up TFTP server..."
 
 # Call actual serial config
 ${SCRIPTPATH}/serial-config.sh
 
-exec_cmd "INFO  " echo "Configuring MCH..."
+exec_cmd "INFO " echo "Configuring MCH..."
 
 # Call actual MCH config script
 ${SCRIPTPATH}/mch-config.exp ${MCH_CONFIG_ARGS}
