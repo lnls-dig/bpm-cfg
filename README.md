@@ -4,13 +4,11 @@
 
 ### 1. Run scripts inside 01-mch-configure to configure the MCH
 
-    ./01-mch-configure/serial-config.sh
-    ./01-mch-configure/mch-config.exp <MCH IP> <MCH Hostname Suffix>
+    ./01-mch-configure/mch-configure.sh <Connection Type> [<MCH IP> <MCH Password>] <TFTP server address> <MCH Hostname Suffix>]
 
-For example:
+For example, for a serial connection, with TFTP server in 10.0.17.38 and MCH Hostanem suffix 09:
 
-    ./01-mch-configure/serial-config.sh
-    ./01-mch-configure/mch-config.exp 10.0.18.60 09
+    ./01-mch-configure/mch-configure.sh serial 10.0.17.38 09
 
 ### 2. Run scripts inside 02-cpu-configure to configure the CPU
 
