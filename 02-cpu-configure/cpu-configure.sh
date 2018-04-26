@@ -9,26 +9,31 @@ SCRIPTPATH="$( cd "$( dirname "${BASH_SOURCE[0]}"  )" && pwd  )"
 
 # Source common functions
 . ${SCRIPTPATH}/../misc/functions.sh
+# Source Crate FPGA mapping
+. ${SCRIPTPATH}/../misc/crate-fpga-mapping.sh
 
 set +u
 
 # Simple argument checking
-if [ $# -lt 4 ]; then
-    echo "Usage: ./cpu-configure.sh <CPU IP> <CPU Hostname Suffix> <Crate Number> <CPU SSH password>"
+if [ $# -lt 3 ]; then
+    echo "Usage: ./cpu-configure.sh <CPU IP> <Crate Number> <CPU SSH password>"
     exit 1
 fi
 
 IP="$1"
-HOSTANAME_SUFFIX="$2"
-CRATE_NUMBER_="$3"
+CRATE_NUMBER_="$2"
 # Remove leading zeros
 CRATE_NUMBER="$(echo ${CRATE_NUMBER_} | sed 's/^0*//')"
-SSHPASS_USR="$4"
+SSHPASS_USR="$3"
 
 set -u
 
-HOSTANAME_PREFIX="cpu-bpm"
-HOSTANAME="${HOSTANAME_PREFIX}"-${HOSTANAME_SUFFIX}
+# Get CPU Hostname
+CPU_HOSTNAME_="BPM_CRATE_${CRATE_NUMBER}_CPU_HOSTNAME"
+CPU_HOSTNAME="${!CPU_HOSTNAME_}"
+
+# Some variables
+HOSTNAME="${CPU_HOSTNAME}"
 CRATE="CRATE_${CRATE_NUMBER}"
 
 BPM_HALCS_CFG_TEMPLATE_IN_FILE="${SCRIPTPATH}/halcs_cfg.in"
@@ -37,7 +42,6 @@ BPM_HALCS_CFG_TEMPLATE_OUT_FILE="${SCRIPTPATH}/halcs.cfg"
 BPM_EPICS_CFG_FILE="/etc/sysconfig/bpm-epics-ioc"
 BPM_HALCS_CFG_FILE="/usr/local/etc/halcs/halcs.cfg"
 TIM_RX_EPICS_CFG_FILE="/etc/sysconfig/tim-rx-epics-ioc"
-HOSTNAME="cpu-bpm-${CRATE_NUMBER}"
 
 ## Ask sudo password only once and
 ## keep updating sudo timestamp to
