@@ -7,7 +7,7 @@ SCRIPTPATH="$( cd "$( dirname "${BASH_SOURCE[0]}"  )" && pwd  )"
 # Source common functions
 . ${SCRIPTPATH}/../misc/functions.sh
 
-MAPPING_DIR="03-fpga-configure"
+MAPPING_DIR="misc"
 MAPPING_FILE="crate-fpga-mapping.sh"
 
 set +u

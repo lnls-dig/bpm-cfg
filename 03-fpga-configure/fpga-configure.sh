@@ -9,7 +9,7 @@ FPGA_BITSTREAMS_DIR=${SCRIPTPATH}/${FPGA_BITSTREAMS_DIR_REL}
 MCH_PORT_BASE=2540
 
 # Source FPGA mapping
-. ${SCRIPTPATH}/crate-fpga-mapping.sh
+. ${SCRIPTPATH}/../misc/crate-fpga-mapping.sh
 
 # Source FPGA bitstreams
 . ${SCRIPTPATH}/fpga-bitstreams.sh
