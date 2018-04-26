@@ -4,19 +4,19 @@
 
 ### 1. Run scripts inside 01-mch-configure to configure the MCH
 
-    ./01-mch-configure/mch-configure.sh <Connection Type> [<MCH IP> <MCH Password>] <TFTP server address> <MCH Hostname Suffix>]
+    ./01-mch-configure/mch-configure.sh <Connection Type> [<MCH IP> <MCH Password>] <TFTP server address> <Crate Number>
 
-For example, for a serial connection, with TFTP server in 10.0.17.38 and MCH Hostanem suffix 09:
+For example, for a serial connection, with TFTP server in 10.0.17.38 and Crate Number 9:
 
-    ./01-mch-configure/mch-configure.sh serial 10.0.17.38 09
+    ./01-mch-configure/mch-configure.sh serial 10.0.17.38 9
 
 ### 2. Run scripts inside 02-cpu-configure to configure the CPU
 
-    ./02-cpu-configure/cpu-configure.sh <CPU IP> <Hostname Suffix> <Crate Number> <CPU Root password>
+    ./02-cpu-configure/cpu-configure.sh <CPU IP> <Crate Number> <CPU Root password>
 
 For example:
 
-    ./02-cpu-configure/cpu-configure.sh 10.0.18.55 09 9 root-pass
+    ./02-cpu-configure/cpu-configure.sh 10.0.18.55 9 root-pass
 
 ### 3. Run scripts inside 03-fpga-configure to configure the FPGAs
 
