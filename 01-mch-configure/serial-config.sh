@@ -7,9 +7,15 @@ SCRIPTPATH="$( cd "$( dirname "${BASH_SOURCE[0]}"  )" && pwd  )"
 # Source RFFE mapping IPs
 . ${SCRIPTPATH}/../misc/functions.sh
 
-exec_cmd "TRACE" echo "Installing needed packages..."
-sudo apt-get install -y cu expect tftpd-hpa tftp
-exec_cmd "TRACE" echo "Success!"
+# Check if we already have the packages
+if ! [[ $(which cu) ]] || ! [[ $(which expect) ]] || \
+    ! [[ $(which tftp) ]]; then
+
+    exec_cmd "TRACE" echo "Installing needed packages..."
+    sudo apt-get install -y cu expect tftpd-hpa tftp
+    exec_cmd "TRACE" echo "Success!"
+
+fi
 
 exec_cmd "TRACE" echo "Adding your user ($USER) to the dialout group (so cu can access the serial ports)..."
 sudo adduser $USER dialout
