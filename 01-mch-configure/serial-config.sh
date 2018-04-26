@@ -52,4 +52,4 @@ else
     exec_cmd "ERR  " echo "TFTP transfer failed!"
 fi
 
-exec_cmd "INFO " echo "You have to log out and in again from this terminal for changes to take effect!"
+exec_cmd "INFO " echo "TFTP successfully configured"
