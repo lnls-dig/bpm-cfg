@@ -94,8 +94,13 @@ expect "nat> "
 
 # Update MCH Firmware version
 send -- "update_firmware\r"
-expect ":>"
+expect "*firmware>"
 send -- "$ipaddr:mch_fw.bin\r"
+expect "TFTP:*"
+expect "erasing sector*"
+expect "program EEPROM*"
+expect "verify EEPROM*"
+expect "successful*"
 expect "nat> "
 
 
