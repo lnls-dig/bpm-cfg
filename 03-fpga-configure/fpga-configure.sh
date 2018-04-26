@@ -78,16 +78,16 @@ for i in `seq 1 ${BPM_MAX_NUM_BOARDS}`; do
     # Get real FPGA bitstream name
     case ${bpm_crate_fpga} in
         "timing")
-            bpm_fpga=${FPGA_BITSTREAMS_DIR}/${FPGA_TIMING_BITSTREAM}
+            board_fpga=${FPGA_BITSTREAMS_DIR}/${FPGA_TIMING_BITSTREAM}
         ;;
         "pbpm")
-            bpm_fpga=${FPGA_BITSTREAMS_DIR}/${FPGA_PBPM_BITSTREAM}
+            board_fpga=${FPGA_BITSTREAMS_DIR}/${FPGA_PBPM_BITSTREAM}
         ;;
         "sr")
-            bpm_fpga=${FPGA_BITSTREAMS_DIR}/${FPGA_SR_BITSTREAM}
+            board_fpga=${FPGA_BITSTREAMS_DIR}/${FPGA_SR_BITSTREAM}
         ;;
         "bo")
-            bpm_fpga=${FPGA_BITSTREAMS_DIR}/${FPGA_BO_BITSTREAM}
+            board_fpga=${FPGA_BITSTREAMS_DIR}/${FPGA_BO_BITSTREAM}
         ;;
         "")
             # Skip it
@@ -99,6 +99,6 @@ for i in `seq 1 ${BPM_MAX_NUM_BOARDS}`; do
         ;;
     esac
 
-    ${SCRIPTPATH}/program-bpms.sh ${MCH_IP} "$((${MCH_PORT_BASE}+${i})),${bpm_fpga}" || \
+    ${SCRIPTPATH}/program-bpms.sh ${MCH_IP} "$((${MCH_PORT_BASE}+${i})),${board_fpga}" || \
         true
 done
