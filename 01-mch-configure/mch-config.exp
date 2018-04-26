@@ -10,8 +10,8 @@ proc send {ignore arg} {
 }
 
 if { $argc < 3 } {
-    puts "\[ERROR\] No arguments provided!"
-    puts "Usage: ./mch_config.exp <type> [<mch_ip> <mch_password>] <ftp_server_address> <hostname_index>"
+    puts "\[ERROR\] rnsufficient arguments provided!"
+    puts "Usage: ./mch_config.exp <Connection Type> [<MCH IP> <MCH Password>] <FTP Server Address> <MCH Hostname>"
     exit 1
 }
 
@@ -21,10 +21,10 @@ if { [string equal "$type" "ssh"] } {
     set mchipaddr [lindex $argv 1]
     set mchpass [lindex $argv 2]
     set ipaddr [lindex $argv 3]
-    set index [lindex $argv 4]
+    set mchhostname [lindex $argv 4]
 } elseif { [string equal "$type" "serial"] } {
     set ipaddr [lindex $argv 1]
-    set index [lindex $argv 2]
+    set mchhostname [lindex $argv 2]
 } else {
     puts "Invalid <type> argument. Options are: \"ssh\" \"serial\""
     exit 1
@@ -51,7 +51,7 @@ send -- "mchcfg\r"
 expect "*Enter configuration mode (RET=0/0x0):*"
 send -- "11\r"
 expect "*Enter host name:*"
-send -- "\010\010\010\010\010\010\010\010\010\010\010\010\010\010\010\010\010\010\010\010mch-bpm-$index\r"
+send -- "\010\010\010\010\010\010\010\010\010\010\010\010\010\010\010\010\010\010\010\010$mchhostname\r"
 expect "*Enter configuration mode (RET=0/0x0):*"
 send -- "q\r"
 expect "nat> "
