@@ -32,6 +32,10 @@ CRATE_NUMBER="$(echo ${CRATE_NUMBER_} | sed 's/^0*//')"
 
 set -u
 
+# Check if repo was cloned with fpga-programming submodule
+[ ! -z "$(ls -A "${SCRIPTPATH}/../foreign/fpga-programming")" ] || \
+    git submodule update --init
+
 ## Ask sudo password only once and
 ## keep updating sudo timestamp to
 ## avoid asking again
