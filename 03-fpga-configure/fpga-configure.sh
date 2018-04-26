@@ -48,7 +48,7 @@ set -u
 #sudo apt-get install -y \
 #    wget
 
-exec_cmd "INFO  " echo "Download bitstreams..."
+exec_cmd "INFO " echo "Download bitstreams..."
 
 BITSTREAM_SUFFIX=.bit
 # Download bitstreams
@@ -60,7 +60,7 @@ for i in `seq 0 $((${#URL_FPGA_ALL[@]}-1))`; do
             . \${SCRIPTPATH}/../misc/functions.sh && \
             cd ${FPGA_BITSTREAMS_DIR}; \
             if [ ! -f ${FPGA_BITSTREAMS_ALL[$i]}${BITSTREAM_SUFFIX} ]; then
-                exec_cmd \"TRACE \" wget -O \
+                exec_cmd \"TRACE\" wget -O \
                     ${FPGA_BITSTREAMS_ALL[$i]}${BITSTREAM_SUFFIX} \
                     ${URL_FPGA_ALL[$i]}${BITSTREAM_SUFFIX}
             fi \
@@ -68,7 +68,7 @@ for i in `seq 0 $((${#URL_FPGA_ALL[@]}-1))`; do
     fi
 done
 
-exec_cmd "INFO  " echo "Flashing FPGA Gateware of all boards..."
+exec_cmd "INFO " echo "Flashing FPGA Gateware of all boards..."
 
 BPM_MAX_NUM_BOARDS=12
 for i in `seq 1 ${BPM_MAX_NUM_BOARDS}`; do
