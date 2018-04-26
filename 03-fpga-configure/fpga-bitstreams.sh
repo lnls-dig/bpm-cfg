@@ -18,11 +18,11 @@ URL_FPGA_PBPM_BITSTREAM=${BPM_URL_RELEASE_BASE}/${BPM_TAG_VERSION}/${FPGA_PBPM_B
 ############################
 # Timing
 ############################
-TIMING_URL_RELEASE_BASE="tim-url-test"
-TIMING_TAG_VERSION="vtim-test"
+TIMING_URL_RELEASE_BASE=""
+TIMING_TAG_VERSION=""
 
 # Bitstream name without the extension!
-FPGA_TIMING_BITSTREAM="afcv3-timing"
+FPGA_TIMING_BITSTREAM="afcv3-timing-vx.y.z-X-Y"
 
 #URL_FPGA_TIMING_BITSTREAM=${TIMING_URL_RELEASE_BASE}/${TIMING_TAG_VERSION}/${FPGA_TIMING_BITSTREAM}
 # Keep this empty until we have the timing bitstream available
