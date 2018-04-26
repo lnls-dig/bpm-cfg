@@ -35,6 +35,11 @@ for i in `seq 0 $((${#URL_MCH_FIRMWARES_ALL[@]}-1))`; do
     fi
 done
 
+exec_cmd "INFO  " echo "Setting up TFTP server..."
+
+# Call actual serial config
+${SCRIPTPATH}/serial-config.sh
+
 exec_cmd "INFO  " echo "Configuring MCH..."
 
 # Call actual MCH config script
