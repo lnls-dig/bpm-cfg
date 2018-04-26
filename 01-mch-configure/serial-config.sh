@@ -17,7 +17,10 @@ exec_cmd "TRACE" echo "Success!"
 
 exec_cmd "TRACE" echo "Setting up the TFTP server..."
 sudo sed -i 's/\":69\"/\"0.0.0.0:69\"/' /etc/default/tftpd-hpa
+# Copy Clock configuration
 sudo cp ${SCRIPTPATH}/mch_clk_cfg.txt /var/lib/tftpboot/
+# Copy MCH firmware update
+sudo cp ${SCRIPTPATH}/firmwares/mch_fw.bin /var/lib/tftpboot/
 sudo service tftpd-hpa restart
 exec_cmd "TRACE" echo "Success!"
 
