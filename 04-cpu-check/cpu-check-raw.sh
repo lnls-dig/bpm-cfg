@@ -28,7 +28,7 @@ SSHPASS="${SSHPASS_USR}" sshpass -e \
             fi
         done && \
         if [[ \"\${ERRS[@]}\" ]]; then \
-            exec_cmd \"ERR  \" echo \"Boards \${ERRS[@]} do not have PCIe link\"
+            exec_cmd \"ERR  \" echo \"Board(s) \${ERRS[@]} do not have PCIe link\"
         else
             exec_cmd \"INFO \" echo \"All boards have PCIe Link\"
         fi \
