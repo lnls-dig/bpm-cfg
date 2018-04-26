@@ -12,7 +12,12 @@ if ! [[ $(which cu) ]] || ! [[ $(which expect) ]] || \
     ! [[ $(which tftp) ]]; then
 
     exec_cmd "TRACE" echo "Installing needed packages..."
-    sudo apt-get install -y cu expect tftpd-hpa tftp
+    sudo apt-get update && \
+    sudo apt-get install -y \
+        cu \
+        expect \
+        tftpd-hpa \
+        tftp
     exec_cmd "TRACE" echo "Success!"
 
 fi
