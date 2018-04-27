@@ -46,3 +46,6 @@ done
 exec_cmd "INFO " echo "Boards slots to check: ${BPM_FPGA_AVAILABLE[@]}"
 
 ${SCRIPTPATH}/cpu-check-raw.sh ${IP} ${SSHPASS_USR} ${BPM_FPGA_AVAILABLE[@]}
+
+# Execute RAM check
+${SCRIPTPATH}/cpu-check-mem.sh ${IP} ${SSHPASS_USR}
