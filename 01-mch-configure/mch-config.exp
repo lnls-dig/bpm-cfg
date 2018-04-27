@@ -102,6 +102,7 @@ expect "Enable telnet access (y/n)*"
 send -- "y\r"
 expect "Enable WEB access (y/n)*"
 send -- "y\r"
+# Enable SSH
 expect "Enable ssh access (y/n)*"
 send -- "y\r"
 # Use DHCP
