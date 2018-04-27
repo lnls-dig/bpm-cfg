@@ -32,7 +32,7 @@ if { [string equal "$type" "ssh"] } {
 
 
 if { [string equal "$type" "ssh"] } {
-    spawn ssh root@$mchipaddr
+    spawn ssh -o StrictHostKeyChecking=no root@$mchipaddr
     expect "root@$mchipaddr's password:*"
     send -- "$mchpass\r"
 } elseif { [string equal "$type" "serial"] } {
