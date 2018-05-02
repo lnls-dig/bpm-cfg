@@ -18,21 +18,30 @@ For example:
 
     ./02-cpu-configure/cpu-configure.sh 10.0.18.55 9 root-pass
 
-### 3. Run scripts inside 03-fpga-configure to configure the FPGAs
+### 3. Run scripts inside 03-mmc-configure to configure the MMCs firmware
 
-    ./03-fpga-configure/fpga-configure.sh <MCH IP> <Crate Number>
+    ./03-mmc-configure/mmc-configure.sh <MCH IP>
 
 For example:
 
-    ./03-fpga-configure/fpga-configure.sh 10.0.18.60 9
+    ./03-mmc-configure/mmc-configure.sh 10.0.18.60
 
-### 4. Run script inside 04-cpu-check to check CPU status
 
-    ./04-cpu-check/cpu-check.sh <CPU IP> <Crate Number> <CPU Root password>
+### 4. Run scripts inside 04-fpga-configure to configure the FPGAs
+
+    ./04-fpga-configure/fpga-configure.sh <MCH IP> <Crate Number>
+
+For example:
+
+    ./04-fpga-configure/fpga-configure.sh 10.0.18.60 9
+
+### 5. Run script inside 05-cpu-check to check CPU status
+
+    ./05-cpu-check/cpu-check.sh <CPU IP> <Crate Number> <CPU Root password>
 
 For example, for testing the link of boards in crate 9:
 
-    ./04-cpu-check/cpu-check.sh 10.0.18.55 9 root-pass
+    ./05-cpu-check/cpu-check.sh 10.0.18.55 9 root-pass
 
 ### 6. Run script inside 06-bpm-test to test BPMs
 
