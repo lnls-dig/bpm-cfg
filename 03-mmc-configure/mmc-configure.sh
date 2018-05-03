@@ -44,7 +44,8 @@ bash -c "\
     SCRIPTPATH=\"\$( cd \"\$( dirname ${BASH_SOURCE[0]}  )\" && pwd  )\" && \
     . \${SCRIPTPATH}/../misc/functions.sh && \
     cd ${SCRIPTPATH}/../foreign/hpm-downloader; \
-    git checkout ffd7057 && \\
+    git checkout ffd7057 && \
+    make && \
     cd ${SCRIPTPATH} \
     "
 
