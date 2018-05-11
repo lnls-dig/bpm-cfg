@@ -1,0 +1,94 @@
+#!/usr/bin/expect -f
+
+# Our SSH takes a while to connect
+set timeout 120
+
+set send_slow {1 .1}
+proc send {ignore arg} {
+    sleep .1
+    exp_send -s -- $arg
+}
+
+if { $argc < 1 } {
+    puts "\[ERROR\] insufficient arguments provided!"
+    puts "Usage: ./ethswitch.exp <FTP Server Address>"
+    exit 1
+}
+
+set ipaddr [lindex $argv 0]
+
+#Connect to the MCH via serial port
+spawn cu -l /dev/ttyACM0 -s 115200
+match_max 100000
+expect "Connected.\r"
+
+#Send two bogus commands to really clear any garbage that 
+#may have been sent before or during connection
+send -- "\r"
+sleep 1
+send -- "\r"
+sleep 1
+send -- "\r"
+
+# Depending on the last session we might be on a different context
+# Try to go back ot the most top-level
+expect {
+ "*Aruba-2930M-24G-PoEP(config)#*" { send -- "exit\r";
+                                    expect "*Aruba-2930M-24G-PoEP#*";
+                                    send -- "exit\r";
+                                    expect "*Aruba-2930M-24G-PoEP>*"; 
+                                    send -- "exit\r";
+				    expect "*Do you want to log out (y/n)?*"
+                                    send -- "y";
+				  }
+ "*Aruba-2930M-24G-PoEP#*"        { send -- "exit\r";
+                                    expect "*Aruba-2930M-24G-PoEP>*"; 
+                                    send -- "exit\r";
+				    expect "*Do you want to log out (y/n)?*"
+                                    send -- "y";
+				  }
+
+ "*Aruba-2930M-24G-PoEP>*"        { 
+                                    send -- "exit\r";
+				    expect "*Do you want to log out (y/n)?*"
+                                    send -- "y";
+				  }
+}
+
+sleep 1
+send -- "\r"
+sleep 1
+send -- "\r"
+expect "*Aruba JL320A 2930M-24G-PoE+ Switch*"
+expect "Press any key to continue*"
+sleep 1
+send -- "\r"
+expect "*"
+send -- "\r"
+expect "*Aruba-2930M-24G-PoEP#"
+send -- "\r"
+expect "*Aruba-2930M-24G-PoEP#"
+sleep 1
+
+# Ready to send commands!
+send -- "configure terminal\r"
+sleep 1
+expect "Aruba-2930M-24G-PoEP(config)#*"
+sleep 1
+send -- "copy tftp startup-config $ipaddr config-switch-dig\r"
+expect "*Device may be rebooted, do you want to continue [y/n]?"
+send -- "y"
+expect "TFTP download in progress*"
+expect "Rebooting switch...*"
+
+###Reboot switch
+send -- "reboot\r"
+expect "This will reboot the system*"
+expect "Continue (y/n)?*"
+sleep 1
+send -- "y\r"
+
+#Close serial connection
+send -- "\r~."
+
+puts "Ethernet Switch is configured correctly and is rebooting now!"

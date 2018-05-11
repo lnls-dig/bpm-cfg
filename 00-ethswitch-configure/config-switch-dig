@@ -1,0 +1,31 @@
+; JL320A Configuration Editor; Created on release #WC.16.04.0008
+; Ver #10:9b.3f.bf.bb.ef.7c.59.fc.6b.fb.9f.fc.ff.ff.37.ef:ad
+
+hostname "Aruba-2930M-24G-PoEP"
+module 1 type jl320a
+flexible-module A type JL083A
+ip routing
+snmp-server community "public" unrestricted
+oobm
+   ip address dhcp-bootp
+   exit
+vlan 1
+   name "Controls Group"
+   no untagged 11-24
+   untagged 1-10,A1-A4
+   ip address 10.2.118.1 255.255.255.0
+   ip address 192.168.1.1 255.255.255.0
+   dhcp-server
+   exit
+vlan 100
+   name "Front-end BPMs"
+   untagged 11-24
+   ip address 192.168.2.1 255.255.255.0
+   exit
+dhcp-server pool "DIG"
+   default-router "192.168.1.1"
+   network 192.168.1.0 255.255.255.0
+   range 192.168.1.2 192.168.1.50
+   exit
+dhcp-server enable
+
