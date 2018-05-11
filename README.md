@@ -2,6 +2,14 @@
 
 ## Instructions
 
+### 0. Run scripts inside 00-ethswitch-configure to configure the Switch
+
+    ./00-ethswitch-configure/ethswitch-configure.sh <TFTP server address>
+
+For example for a TFTP server in 10.0.17.38:
+
+    ./00-ethswitch-configure/ethswitch-configure.sh 10.0.17.38
+
 ### 1. Run scripts inside 01-mch-configure to configure the MCH
 
     ./01-mch-configure/mch-configure.sh <Connection Type> [<MCH IP> <MCH Password>] <TFTP server address> <Crate Number>
