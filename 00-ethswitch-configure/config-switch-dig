@@ -13,7 +13,6 @@ vlan 1
    name "Controls Group"
    no untagged 11-24
    untagged 1-10,A1-A4
-   ip address 10.2.118.1 255.255.255.0
    ip address 192.168.1.1 255.255.255.0
    dhcp-server
    exit
