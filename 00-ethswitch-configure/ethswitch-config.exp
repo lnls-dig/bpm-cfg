@@ -9,14 +9,6 @@ proc send {ignore arg} {
     exp_send -s -- $arg
 }
 
-if { $argc < 1 } {
-    puts "\[ERROR\] insufficient arguments provided!"
-    puts "Usage: ./ethswitch.exp <FTP Server Address>"
-    exit 1
-}
-
-set ipaddr [lindex $argv 0]
-
 #Connect to the MCH via serial port
 spawn cu -l /dev/ttyACM0 -s 115200
 match_max 100000
@@ -24,6 +16,10 @@ expect "Connected.\r"
 
 #Send two bogus commands to really clear any garbage that 
 #may have been sent before or during connection
+send -- "\r"
+sleep 1
+send -- "\r"
+sleep 1
 send -- "\r"
 sleep 1
 send -- "\r"
@@ -75,18 +71,17 @@ send -- "configure terminal\r"
 sleep 1
 expect "Aruba-2930M-24G-PoEP(config)#*"
 sleep 1
-send -- "copy tftp startup-config $ipaddr config-switch-dig\r"
-expect "*Device may be rebooted, do you want to continue [y/n]?"
-send -- "y"
-expect "TFTP download in progress*"
-expect "Rebooting switch...*"
-
-###Reboot switch
-send -- "reboot\r"
-expect "This will reboot the system*"
-expect "Continue (y/n)?*"
+send -- "copy usb startup-config config-switch-dig\r"
+expect "*Device may be rebooted, do you want to continue*"
 sleep 1
-send -- "y\r"
+send -- "y"
+expect "Copying from USB device.*"
+
+expect {
+ "*Downloaded file identical to current, no update performed*" {
+                 expect "*Aruba-2930M-24G-PoEP(config)#*" } 
+ "*Rebooting switch...*" {}
+}
 
 #Close serial connection
 send -- "\r~."
