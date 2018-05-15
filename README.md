@@ -4,11 +4,14 @@
 
 ### 0. Run scripts inside 00-ethswitch-configure to configure the Switch
 
-    ./00-ethswitch-configure/ethswitch-configure.sh <TFTP server address>
+Before running the scripts be sure to have a USB stick with the file
+"config-switch-dig" connected in the switch "Aux Port"
 
-For example for a TFTP server in 10.0.17.38:
+    ./00-ethswitch-configure/ethswitch-configure.sh
 
-    ./00-ethswitch-configure/ethswitch-configure.sh 10.0.17.38
+For example:
+
+    ./00-ethswitch-configure/ethswitch-configure.sh
 
 ### 1. Run scripts inside 01-mch-configure to configure the MCH
 
