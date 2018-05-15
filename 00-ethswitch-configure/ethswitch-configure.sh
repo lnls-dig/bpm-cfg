@@ -19,7 +19,7 @@ TFTP_IPADDR="$1"
 
 set -u
 
-exec_cmd "INFO " echo "Setting up TFTP server..."
+exec_cmd "INFO " echo "Setting up Serial connection..."
 
 # Call actual serial config
 ${SCRIPTPATH}/serial-config.sh
