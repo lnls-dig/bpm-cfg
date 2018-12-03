@@ -76,12 +76,16 @@ done
 exec_cmd "TRACE" echo "Modifying EPICS PV prefixes..."
 
 # Login via SSH and setup configuration files
+# Set the --static, --transient and --pretty
+# hostnames by the HOSTNAME variable contents
 SSHPASS="${SSHPASS_USR}" sshpass -e \
     ssh -o StrictHostKeyChecking=no \
     root@${IP} \
     bash -c "\
         echo \"\" > /etc/hostname && \
-        sysctl kernel.hostname=${HOSTNAME} > /dev/null && \
+        sysctl kernel.hostname=\"${HOSTNAME}\" > /dev/null && \
+        sysctl -w kernel.hostname=\"${HOSTNAME}\" > /dev/null && \
+        hostnamectl set-hostname \"${HOSTNAME}\" > /dev/null && \
         sed -i -e \"\
             { \
                 s|EPICS_PV_CRATE_PREFIX=.*\$|EPICS_PV_CRATE_PREFIX=${CRATE}|; \
