@@ -46,7 +46,7 @@ for portbit in ${PORT_BITSTREAM[*]}; do
             --mcs=${bitstream_mcs} \
             --svf=./afc-scansta.svf \
             --prog_flash \
-            --hw_server_url=30${CRATE_NUMBER} \
+            --hw_server_url=localhost:30${CRATE_NUMBER} \
             --host_url=${MCH_IP}:${port}; \
             if [ \$? -eq 0 ]; then
                 exec_cmd \"INFO \" echo \"FPGA gateware successfully programmed\"
