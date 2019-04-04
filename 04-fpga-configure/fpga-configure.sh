@@ -99,6 +99,6 @@ for i in `seq 1 ${BPM_MAX_NUM_BOARDS}`; do
         ;;
     esac
 
-    ${SCRIPTPATH}/program-bpms.sh ${MCH_IP} "$((${MCH_PORT_BASE}+${i})),${board_fpga}" || \
+    ${SCRIPTPATH}/program-bpms.sh ${MCH_IP} "$((${MCH_PORT_BASE}+${i})),${board_fpga}" ${CRATE_NUMBER} || \
         true
 done

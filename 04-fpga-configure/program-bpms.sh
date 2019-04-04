@@ -9,6 +9,7 @@ set -euo pipefail
 MCH_IP=$1
 # This must follow the format "<port_number>,<bitstream_name_without_extension>"
 PORT_BITSTREAM="$2"
+CRATE_NUMBER="$3"
 
 SCRIPTPATH="$( cd "$( dirname "${BASH_SOURCE[0]}"  )" && pwd  )"
 
@@ -45,6 +46,7 @@ for portbit in ${PORT_BITSTREAM[*]}; do
             --mcs=${bitstream_mcs} \
             --svf=./afc-scansta.svf \
             --prog_flash \
+            --hw_server_url=30${CRATE_NUMBER} \
             --host_url=${MCH_IP}:${port}; \
             if [ \$? -eq 0 ]; then
                 exec_cmd \"INFO \" echo \"FPGA gateware successfully programmed\"
