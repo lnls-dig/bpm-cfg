@@ -100,6 +100,6 @@ for i in `seq 1 ${BPM_MAX_NUM_BOARDS}`; do
     esac
 
     ${SCRIPTPATH}/program-bpms.sh ${MCH_IP} "$((${MCH_PORT_BASE}+${i})),${board_fpga}" ${CRATE_NUMBER} | \
-        tee log_bpm_${CRATE_NUMBER}.log 2>&1 || \
+        tee -a log_bpm_${CRATE_NUMBER}.log 2>&1 || \
         true
 done
