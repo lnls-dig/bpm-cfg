@@ -4,7 +4,7 @@
 # using the vivado-prog.py script. It does not aim to be generic,
 # but to provide a starting point for more complex scripts
 
-set -euo pipefail
+set -euxo pipefail
 
 MCH_IP=$1
 # This must follow the format "<port_number>,<bitstream_name_without_extension>"
@@ -18,6 +18,7 @@ SCRIPTPATH="$( cd "$( dirname "${BASH_SOURCE[0]}"  )" && pwd  )"
 
 BIT_EXTENSION=.bit
 MCS_EXTENSION=.mcs
+NSVF_EXTENSION=.nsvf
 
 for portbit in ${PORT_BITSTREAM[*]}; do
     OLDIFS=$IFS; IFS=',';
@@ -25,35 +26,31 @@ for portbit in ${PORT_BITSTREAM[*]}; do
     set -- ${portbit};
     port=$1
     bitstream_raw=$2
+    slot_nsvf=$3
 
     if [ "${bitstream_raw}" ]; then
-        exec_cmd "INFO " echo "Programming AFC located in port: "${port}
+        echo "Programming AFC located in port: " ${port}
+        echo "Programming AFC located in slot nsvf: " ${slot_nsvf}
 
         # Bitstream/MCS names
         bitstream_bit=${bitstream_raw}${BIT_EXTENSION}
         bitstream_mcs=${bitstream_raw}${MCS_EXTENSION}
+        bitstream_nsvf=${bitstream_raw}${NSVF_EXTENSION}
 
-        exec_cmd "INFO " echo "Using bitstream: " ${bitstream_bit}
-        exec_cmd "INFO " echo "Using mcs: " ${bitstream_mcs}
+        echo "Using bitstream: " ${bitstream_bit}
+        echo "Using mcs: " ${bitstream_mcs}
+        echo "Using nsvf: " ${bitstream_nsvf}
 
-        bash -c "\
-            SCRIPTPATH=\"\$( cd \"\$( dirname ${BASH_SOURCE[0]}  )\" && pwd  )\" && \
-            . \${SCRIPTPATH}/../misc/functions.sh && \
-            cd \${SCRIPTPATH}/../foreign/fpga-programming/ && \
-            time ./vivado-prog.py \
-            --bit_to_mcs \
-            --bit=${bitstream_bit} \
-            --mcs=${bitstream_mcs} \
-            --svf=./afc-scansta.svf \
-            --prog_flash \
-            --hw_server_url=localhost:30${CRATE_NUMBER} \
-            --host_url=${MCH_IP}:${port}; \
-            if [ \$? -eq 0 ]; then
-                exec_cmd \"INFO \" echo \"FPGA gateware successfully programmed\"
-            else
-                exec_cmd \"ERR  \" echo \"FPGA gateware programming error!\"
-            fi
-        "
+        curl \
+        -H "Content-Type: multipart/form-data" \
+        -F "XsvfReqTarget=${slot_nsvf}" \
+        -F "XsvfReqFreq=9" \
+        -F "filename=@${bitstream_nsvf}" \
+        -X POST \
+        -u "root":"nat" \
+        "http://${MCH_IP}/goform/ctrl_svf_proc" && \
+            echo "Programming has successfully completed." || \
+            echo "Programming has failed."
     fi
 
     IFS=$OLDIFS;
