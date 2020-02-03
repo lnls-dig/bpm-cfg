@@ -67,7 +67,10 @@ for board in `seq 1 ${BPM_MAX_NUM_BOARDS}`; do
     for halcs in `seq 0 $((${BPM_MAX_NUM_HALCS}-1))`; do
         bpm_rffe_ip_idx="${board}${halcs}"
         bpm_rffe_ip="BPM_RFFE_IP_MAPPING[${bpm_rffe_ip_idx}]"
-        sed -i -e "s#<RFFE_BOARD${board}_HALCS${halcs}_IP>#${!bpm_rffe_ip}#" \
+        bpm_rffe_proto="BPM_RFFE_PROTO_MAPPING[${bpm_rffe_ip_idx}]"
+        sed -i \
+            -e "s#<RFFE_BOARD${board}_HALCS${halcs}_IP>#${!bpm_rffe_ip}#" \
+            -e "s#<RFFE_BOARD${board}_HALCS${halcs}_PROTO>#${!bpm_rffe_proto}#" \
             ${BPM_HALCS_CFG_TEMPLATE_OUT_FILE}
     done
 done
