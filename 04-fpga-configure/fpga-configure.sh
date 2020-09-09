@@ -99,7 +99,6 @@ for i in `seq 1 ${BPM_MAX_NUM_BOARDS}`; do
         ;;
     esac
 
-    # FIXME PORT NUMBERS for SLOT 1, 2 and 3!!!
     ${SCRIPTPATH}/program-bpms.sh ${MCH_IP} "$((${MCH_PORT_BASE}+${i})),${board_fpga},$((${i}-1))" ${CRATE_NUMBER} | \
         tee -a log_bpm_${CRATE_NUMBER}.log 2>&1 || \
         true
