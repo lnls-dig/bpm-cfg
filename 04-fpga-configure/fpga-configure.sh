@@ -48,9 +48,9 @@ set -u
 #sudo apt-get install -y \
 #    wget
 
-exec_cmd "INFO " echo "Download bitstreams..."
+exec_cmd "INFO " echo "Checking nsvf files..."
 
-BITSTREAM_SUFFIX=.bit
+NSVF_EXTENSION=.nsvf
 # Download bitstreams
 mkdir -p ${FPGA_BITSTREAMS_DIR}
 for i in `seq 0 $((${#URL_FPGA_ALL[@]}-1))`; do
@@ -59,14 +59,15 @@ for i in `seq 0 $((${#URL_FPGA_ALL[@]}-1))`; do
             SCRIPTPATH=\"\$( cd \"\$( dirname ${BASH_SOURCE[0]}  )\" && pwd  )\" && \
             . \${SCRIPTPATH}/../misc/functions.sh && \
             cd ${FPGA_BITSTREAMS_DIR}; \
-            if [ ! -f ${FPGA_BITSTREAMS_ALL[$i]}${BITSTREAM_SUFFIX} ]; then
-                exec_cmd \"TRACE\" wget -O \
-                    ${FPGA_BITSTREAMS_ALL[$i]}${BITSTREAM_SUFFIX} \
-                    ${URL_FPGA_ALL[$i]}${BITSTREAM_SUFFIX}
+            if [ ! -f ${FPGA_BITSTREAMS_ALL[$i]}${NSVF_EXTENSION} ]; then
+                exec_cmd \"ERR  \" echo \"File \
+                    ${FPGA_BITSTREAMS_ALL[$i]}${NSVF_EXTENSION} not found.\" >&2
+                exit 1
             fi \
         "
     fi
 done
+
 
 exec_cmd "INFO " echo "Flashing FPGA Gateware of all boards..."
 
