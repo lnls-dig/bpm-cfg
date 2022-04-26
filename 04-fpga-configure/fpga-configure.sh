@@ -81,6 +81,9 @@ for i in `seq 1 ${BPM_MAX_NUM_BOARDS}`; do
         "timing")
             board_fpga=${FPGA_BITSTREAMS_DIR}/${FPGA_TIMING_BITSTREAM}
         ;;
+        "fofb")
+            board_fpga=${FPGA_BITSTREAMS_DIR}/${FPGA_FOFB_BITSTREAM}
+        ;;
         "pbpm")
             board_fpga=${FPGA_BITSTREAMS_DIR}/${FPGA_PBPM_BITSTREAM}
         ;;
