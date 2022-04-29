@@ -16,6 +16,19 @@ URL_FPGA_SR_BITSTREAM=${BPM_URL_RELEASE_BASE}/${BPM_TAG_VERSION}/${FPGA_SR_BITST
 URL_FPGA_PBPM_BITSTREAM=${BPM_URL_RELEASE_BASE}/${BPM_TAG_VERSION}/${FPGA_PBPM_BITSTREAM}
 
 ############################
+# FOFB
+############################
+FOFB_URL_RELEASE_BASE=""
+FOFB_TAG_VERSION=""
+
+# Bitstream name without the extension!
+FPGA_FOFB_BITSTREAM="afcv4_ref_fofb_ctrl"
+
+#URL_FPGA_FOFB_BITSTREAM=${FOFB_URL_RELEASE_BASE}/${FOFB_TAG_VERSION}/${FPGA_FOFB_BITSTREAM}
+# Keep this empty until we have the fofb bitstream available
+URL_FPGA_FOFB_BITSTREAM=""
+
+############################
 # Timing
 ############################
 TIMING_URL_RELEASE_BASE=""
@@ -35,8 +48,10 @@ URL_FPGA_TIMING_BITSTREAM=""
 URL_FPGA_ALL=(${URL_FPGA_BO_BITSTREAM}
             ${URL_FPGA_SR_BITSTREAM}
             ${URL_FPGA_PBPM_BITSTREAM}
+            ${URL_FPGA_FOFB_BITSTREAM}
             ${URL_FPGA_TIMING_BITSTREAM})
 FPGA_BITSTREAMS_ALL=(${FPGA_BO_BITSTREAM}
                     ${FPGA_SR_BITSTREAM}
                     ${FPGA_PBPM_BITSTREAM}
+                    ${FPGA_FOFB_BITSTREAM}
                     ${FPGA_TIMING_BITSTREAM})
