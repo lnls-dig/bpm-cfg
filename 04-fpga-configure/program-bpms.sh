@@ -16,8 +16,6 @@ SCRIPTPATH="$( cd "$( dirname "${BASH_SOURCE[0]}"  )" && pwd  )"
 # Source common functions
 . ${SCRIPTPATH}/../misc/functions.sh
 
-BIT_EXTENSION=.bit
-MCS_EXTENSION=.mcs
 NSVF_EXTENSION=.nsvf
 
 for portbit in ${PORT_BITSTREAM[*]}; do
@@ -32,13 +30,8 @@ for portbit in ${PORT_BITSTREAM[*]}; do
         echo "Programming AFC located in port: " ${port}
         echo "Programming AFC located in slot nsvf: " ${slot_nsvf}
 
-        # Bitstream/MCS names
-        bitstream_bit=${bitstream_raw}${BIT_EXTENSION}
-        bitstream_mcs=${bitstream_raw}${MCS_EXTENSION}
         bitstream_nsvf=${bitstream_raw}${NSVF_EXTENSION}
 
-        echo "Using bitstream: " ${bitstream_bit}
-        echo "Using mcs: " ${bitstream_mcs}
         echo "Using nsvf: " ${bitstream_nsvf}
 
         curl \
