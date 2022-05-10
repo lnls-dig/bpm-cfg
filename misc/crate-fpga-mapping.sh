@@ -25,7 +25,7 @@ declare -a BPM_CRATE_22_FPGA
 
 # Crate 1 FPGA bitstreams definitions
 BPM_CRATE_1_FPGA[1]="timing"
-BPM_CRATE_1_FPGA[2]=""
+BPM_CRATE_1_FPGA[2]="fofb"
 BPM_CRATE_1_FPGA[3]=""
 BPM_CRATE_1_FPGA[4]=""
 BPM_CRATE_1_FPGA[5]=""
@@ -42,7 +42,7 @@ BPM_CRATE_1_MCH_HOSTNAME="IA-01RaBPM-CO-CrateCtrl"
 
 # Crate 2 FPGA bitstreams definitions
 BPM_CRATE_2_FPGA[1]="timing"
-BPM_CRATE_2_FPGA[2]=""
+BPM_CRATE_2_FPGA[2]="fofb"
 BPM_CRATE_2_FPGA[3]=""
 BPM_CRATE_2_FPGA[4]=""
 BPM_CRATE_2_FPGA[5]=""
@@ -59,7 +59,7 @@ BPM_CRATE_2_MCH_HOSTNAME="IA-02RaBPM-CO-CrateCtrl"
 
 # Crate 3 FPGA bitstreams definitions
 BPM_CRATE_3_FPGA[1]="timing"
-BPM_CRATE_3_FPGA[2]=""
+BPM_CRATE_3_FPGA[2]="fofb"
 BPM_CRATE_3_FPGA[3]=""
 BPM_CRATE_3_FPGA[4]=""
 BPM_CRATE_3_FPGA[5]=""
@@ -76,7 +76,7 @@ BPM_CRATE_3_MCH_HOSTNAME="IA-03RaBPM-CO-CrateCtrl"
 
 # Crate 4 FPGA bitstreams definitions
 BPM_CRATE_4_FPGA[1]="timing"
-BPM_CRATE_4_FPGA[2]=""
+BPM_CRATE_4_FPGA[2]="fofb"
 BPM_CRATE_4_FPGA[3]=""
 BPM_CRATE_4_FPGA[4]=""
 BPM_CRATE_4_FPGA[5]=""
@@ -93,7 +93,7 @@ BPM_CRATE_4_MCH_HOSTNAME="IA-04RaBPM-CO-CrateCtrl"
 
 # Crate 5 FPGA bitstreams definitions
 BPM_CRATE_5_FPGA[1]="timing"
-BPM_CRATE_5_FPGA[2]=""
+BPM_CRATE_5_FPGA[2]="fofb"
 BPM_CRATE_5_FPGA[3]=""
 BPM_CRATE_5_FPGA[4]=""
 BPM_CRATE_5_FPGA[5]=""
@@ -110,7 +110,7 @@ BPM_CRATE_5_MCH_HOSTNAME="IA-05RaBPM-CO-CrateCtrl"
 
 # Crate 6 FPGA bitstreams definitions
 BPM_CRATE_6_FPGA[1]="timing"
-BPM_CRATE_6_FPGA[2]=""
+BPM_CRATE_6_FPGA[2]="fofb"
 BPM_CRATE_6_FPGA[3]=""
 BPM_CRATE_6_FPGA[4]="pbpm"
 BPM_CRATE_6_FPGA[5]=""
@@ -127,7 +127,7 @@ BPM_CRATE_6_MCH_HOSTNAME="IA-06RaBPM-CO-CrateCtrl"
 
 # Crate 7 FPGA bitstreams definitions
 BPM_CRATE_7_FPGA[1]="timing"
-BPM_CRATE_7_FPGA[2]=""
+BPM_CRATE_7_FPGA[2]="fofb"
 BPM_CRATE_7_FPGA[3]=""
 BPM_CRATE_7_FPGA[4]="pbpm"
 BPM_CRATE_7_FPGA[5]=""
@@ -144,7 +144,7 @@ BPM_CRATE_7_MCH_HOSTNAME="IA-07RaBPM-CO-CrateCtrl"
 
 # Crate 8 FPGA bitstreams definitions
 BPM_CRATE_8_FPGA[1]="timing"
-BPM_CRATE_8_FPGA[2]=""
+BPM_CRATE_8_FPGA[2]="fofb"
 BPM_CRATE_8_FPGA[3]=""
 BPM_CRATE_8_FPGA[4]="pbpm"
 BPM_CRATE_8_FPGA[5]=""
@@ -161,7 +161,7 @@ BPM_CRATE_8_MCH_HOSTNAME="IA-08RaBPM-CO-CrateCtrl"
 
 # Crate 9 FPGA bitstreams definitions
 BPM_CRATE_9_FPGA[1]="timing"
-BPM_CRATE_9_FPGA[2]=""
+BPM_CRATE_9_FPGA[2]="fofb"
 BPM_CRATE_9_FPGA[3]=""
 BPM_CRATE_9_FPGA[4]="pbpm"
 BPM_CRATE_9_FPGA[5]=""
@@ -178,7 +178,7 @@ BPM_CRATE_9_MCH_HOSTNAME="IA-09RaBPM-CO-CrateCtrl"
 
 # Crate 10 FPGA bitstreams definitions
 BPM_CRATE_10_FPGA[1]="timing"
-BPM_CRATE_10_FPGA[2]=""
+BPM_CRATE_10_FPGA[2]="fofb"
 BPM_CRATE_10_FPGA[3]=""
 BPM_CRATE_10_FPGA[4]=""
 BPM_CRATE_10_FPGA[5]="pbpm"
@@ -195,7 +195,7 @@ BPM_CRATE_10_MCH_HOSTNAME="IA-10RaBPM-CO-CrateCtrl"
 
 # Crate 11 FPGA bitstreams definitions
 BPM_CRATE_11_FPGA[1]="timing"
-BPM_CRATE_11_FPGA[2]=""
+BPM_CRATE_11_FPGA[2]="fofb"
 BPM_CRATE_11_FPGA[3]=""
 BPM_CRATE_11_FPGA[4]="pbpm"
 BPM_CRATE_11_FPGA[5]=""
@@ -212,7 +212,7 @@ BPM_CRATE_11_MCH_HOSTNAME="IA-11RaBPM-CO-CrateCtrl"
 
 # Crate 12 FPGA bitstreams definitions
 BPM_CRATE_12_FPGA[1]="timing"
-BPM_CRATE_12_FPGA[2]=""
+BPM_CRATE_12_FPGA[2]="fofb"
 BPM_CRATE_12_FPGA[3]=""
 BPM_CRATE_12_FPGA[4]="pbpm"
 BPM_CRATE_12_FPGA[5]="pbpm"
@@ -229,7 +229,7 @@ BPM_CRATE_12_MCH_HOSTNAME="IA-12RaBPM-CO-CrateCtrl"
 
 # Crate 13 FPGA bitstreams definitions
 BPM_CRATE_13_FPGA[1]="timing"
-BPM_CRATE_13_FPGA[2]=""
+BPM_CRATE_13_FPGA[2]="fofb"
 BPM_CRATE_13_FPGA[3]=""
 BPM_CRATE_13_FPGA[4]=""
 BPM_CRATE_13_FPGA[5]="pbpm"
@@ -246,7 +246,7 @@ BPM_CRATE_13_MCH_HOSTNAME="IA-13RaBPM-CO-CrateCtrl"
 
 # Crate 14 FPGA bitstreams definitions
 BPM_CRATE_14_FPGA[1]="timing"
-BPM_CRATE_14_FPGA[2]=""
+BPM_CRATE_14_FPGA[2]="fofb"
 BPM_CRATE_14_FPGA[3]=""
 BPM_CRATE_14_FPGA[4]="pbpm"
 BPM_CRATE_14_FPGA[5]="pbpm"
@@ -263,7 +263,7 @@ BPM_CRATE_14_MCH_HOSTNAME="IA-14RaBPM-CO-CrateCtrl"
 
 # Crate 15 FPGA bitstreams definitions
 BPM_CRATE_15_FPGA[1]="timing"
-BPM_CRATE_15_FPGA[2]=""
+BPM_CRATE_15_FPGA[2]="fofb"
 BPM_CRATE_15_FPGA[3]=""
 BPM_CRATE_15_FPGA[4]="pbpm"
 BPM_CRATE_15_FPGA[5]=""
@@ -280,7 +280,7 @@ BPM_CRATE_15_MCH_HOSTNAME="IA-15RaBPM-CO-CrateCtrl"
 
 # Crate 16 FPGA bitstreams definitions
 BPM_CRATE_16_FPGA[1]="timing"
-BPM_CRATE_16_FPGA[2]=""
+BPM_CRATE_16_FPGA[2]="fofb"
 BPM_CRATE_16_FPGA[3]="sr"
 BPM_CRATE_16_FPGA[4]=""
 BPM_CRATE_16_FPGA[5]=""
@@ -297,7 +297,7 @@ BPM_CRATE_16_MCH_HOSTNAME="IA-16RaBPM-CO-CrateCtrl"
 
 # Crate 17 FPGA bitstreams definitions
 BPM_CRATE_17_FPGA[1]="timing"
-BPM_CRATE_17_FPGA[2]=""
+BPM_CRATE_17_FPGA[2]="fofb"
 BPM_CRATE_17_FPGA[3]=""
 BPM_CRATE_17_FPGA[4]=""
 BPM_CRATE_17_FPGA[5]=""
@@ -314,7 +314,7 @@ BPM_CRATE_17_MCH_HOSTNAME="IA-17RaBPM-CO-CrateCtrl"
 
 # Crate 18 FPGA bitstreams definitions
 BPM_CRATE_18_FPGA[1]="timing"
-BPM_CRATE_18_FPGA[2]=""
+BPM_CRATE_18_FPGA[2]="fofb"
 BPM_CRATE_18_FPGA[3]=""
 BPM_CRATE_18_FPGA[4]=""
 BPM_CRATE_18_FPGA[5]=""
@@ -331,7 +331,7 @@ BPM_CRATE_18_MCH_HOSTNAME="IA-18RaBPM-CO-CrateCtrl"
 
 # Crate 19 FPGA bitstreams definitions
 BPM_CRATE_19_FPGA[1]="timing"
-BPM_CRATE_19_FPGA[2]=""
+BPM_CRATE_19_FPGA[2]="fofb"
 BPM_CRATE_19_FPGA[3]=""
 BPM_CRATE_19_FPGA[4]=""
 BPM_CRATE_19_FPGA[5]=""
@@ -348,7 +348,7 @@ BPM_CRATE_19_MCH_HOSTNAME="IA-19RaBPM-CO-CrateCtrl"
 
 # Crate 20 FPGA bitstreams definitions
 BPM_CRATE_20_FPGA[1]="timing"
-BPM_CRATE_20_FPGA[2]=""
+BPM_CRATE_20_FPGA[2]="fofb"
 BPM_CRATE_20_FPGA[3]=""
 BPM_CRATE_20_FPGA[4]=""
 BPM_CRATE_20_FPGA[5]=""
