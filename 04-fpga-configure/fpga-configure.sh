@@ -82,7 +82,7 @@ for slot in `seq 1 ${BPM_MAX_NUM_BOARDS}`; do
     ;;
   esac
 
-  ${SCRIPTPATH}/program-bpms.sh ${MCH_IP} "${board_fpga},$((${slot} - 1))" | \
+  ${SCRIPTPATH}/curl-program.sh ${MCH_IP} "${board_fpga},$((${slot} - 1))" | \
     tee -a log_bpm_${CRATE_NUMBER}.log 2>&1 || \
     true
 done
