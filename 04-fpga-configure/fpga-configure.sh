@@ -82,7 +82,22 @@ for slot in `seq 1 ${BPM_MAX_NUM_BOARDS}`; do
     ;;
   esac
 
-  ${SCRIPTPATH}/curl-program.sh ${MCH_IP} "${board_fpga},$((${slot} - 1))" | \
-    tee -a log_bpm_${CRATE_NUMBER}.log 2>&1 || \
-    true
+  case ${bpm_crate_fpga} in
+    "timing" | "pbpm" | "sr" | "bo")
+      # AFCv3.1 uses curl
+      ${SCRIPTPATH}/curl-program.sh ${MCH_IP} "${board_fpga},$((${slot} - 1))" | \
+        tee -a log_bpm_${CRATE_NUMBER}.log 2>&1 || \
+        true
+    ;;
+    "fofb")
+      # AFCv4 uses openocd
+      ${SCRIPTPATH}/openocd-program.sh ${MCH_IP} ${board_fpga} ${slot} | \
+        tee -a log_bpm_${CRATE_NUMBER}.log 2>&1 || \
+        true
+    ;;
+    "")
+      # Skip it
+      continue
+    ;;
+  esac
 done

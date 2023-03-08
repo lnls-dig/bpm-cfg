@@ -11,7 +11,7 @@ FPGA_PBPM_BITSTREAM=""
 ############################
 # FOFB
 ############################
-# NSVF file
+# BIN file
 FPGA_FOFB_BITSTREAM=""
 
 ############################
