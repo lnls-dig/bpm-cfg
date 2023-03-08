@@ -7,38 +7,31 @@
 set -euxo pipefail
 
 MCH_IP=$1
-# This must follow the format "<port_number>,<bitstream_name_without_extension>"
+# This must follow the format "<bitstream>,<nsvf slot>"
 PORT_BITSTREAM="$2"
-CRATE_NUMBER="$3"
 
 SCRIPTPATH="$( cd "$( dirname "${BASH_SOURCE[0]}"  )" && pwd  )"
 
 # Source common functions
 . ${SCRIPTPATH}/../misc/functions.sh
 
-NSVF_EXTENSION=.nsvf
-
 for portbit in ${PORT_BITSTREAM[*]}; do
     OLDIFS=$IFS; IFS=',';
     # Separate "tuple" arguments with positional notation
     set -- ${portbit};
-    port=$1
-    bitstream_raw=$2
-    slot_nsvf=$3
+    bitstream=$1
+    nsvf_slot=$2
 
-    if [ "${bitstream_raw}" ]; then
-        echo "Programming AFC located in port: " ${port}
-        echo "Programming AFC located in slot nsvf: " ${slot_nsvf}
+    if [ "${bitstream}" ]; then
+        echo "Programming AFC located in slot nsvf: " ${nsvf_slot}
 
-        bitstream_nsvf=${bitstream_raw}${NSVF_EXTENSION}
-
-        echo "Using nsvf: " ${bitstream_nsvf}
+        echo "Using nsvf: " ${bitstream}
 
         curl \
         -H "Content-Type: multipart/form-data" \
-        -F "XsvfReqTarget=${slot_nsvf}" \
+        -F "XsvfReqTarget=${nsvf_slot}" \
         -F "XsvfReqFreq=9" \
-        -F "filename=@${bitstream_nsvf}" \
+        -F "filename=@${bitstream}" \
         -X POST \
         -u "root":"nat" \
         "http://${MCH_IP}/goform/ctrl_svf_proc" && \
