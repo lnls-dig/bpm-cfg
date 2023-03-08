@@ -363,7 +363,7 @@ BPM_CRATE_20_FPGA[12]="bo"
 BPM_CRATE_20_CPU_HOSTNAME="IA-20RaBPM-CO-IOCSrv"
 BPM_CRATE_20_MCH_HOSTNAME="IA-20RaBPM-CO-CrateCtrl"
 
-# Crate 21 FPGA bitstreams definitions
+# Crate 21 (20 TL) FPGA bitstreams definitions
 BPM_CRATE_21_FPGA[1]="timing"
 BPM_CRATE_21_FPGA[2]=""
 BPM_CRATE_21_FPGA[3]=""
