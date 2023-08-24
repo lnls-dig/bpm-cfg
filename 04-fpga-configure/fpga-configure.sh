@@ -8,7 +8,7 @@ SCRIPTPATH="$( cd "$( dirname "${BASH_SOURCE[0]}"  )" && pwd  )"
 . ${SCRIPTPATH}/../misc/crate-fpga-mapping.sh
 
 # Source FPGA bitstreams
-. ${SCRIPTPATH}/fpga-bitstreams.sh
+. ${SCRIPTPATH}/fpga-bins.sh
 
 # Source common functions
 . ${SCRIPTPATH}/../misc/functions.sh
@@ -34,22 +34,24 @@ for slot in `seq 1 ${BPM_MAX_NUM_BOARDS}`; do
   bpm_crate_fpga_raw="BPM_CRATE_${CRATE_NUMBER}_FPGA[${slot}]"
   bpm_crate_fpga=${!bpm_crate_fpga_raw}
 
+  afc_type="afcv3"
   # Get real FPGA bitstream name
   case ${bpm_crate_fpga} in
     "timing")
-      board_fpga=g${FPGA_TIMING_BITSTREAM}
+      board_fpga=${FPGA_TIMING_BIN}
     ;;
     "fofb")
-      board_fpga=g${FPGA_FOFB_BITSTREAM}
+      afc_type="afcv4_sfp"
+      board_fpga=${FPGA_FOFB_BIN}
     ;;
     "pbpm")
-      board_fpga=g${FPGA_PBPM_BITSTREAM}
+      board_fpga=${FPGA_PBPM_BIN}
     ;;
     "sr")
-      board_fpga=g${FPGA_SR_BITSTREAM}
+      board_fpga=${FPGA_SR_BIN}
     ;;
     "bo")
-      board_fpga=g${FPGA_BO_BITSTREAM}
+      board_fpga=${FPGA_BO_BIN}
     ;;
     "")
       # Skip it
@@ -62,15 +64,8 @@ for slot in `seq 1 ${BPM_MAX_NUM_BOARDS}`; do
   esac
 
   case ${bpm_crate_fpga} in
-    "timing" | "pbpm" | "sr" | "bo")
-      # AFCv3.1 uses curl
-      ${SCRIPTPATH}/curl-program.sh ${MCH_IP} "${board_fpga},$((${slot} - 1))" | \
-        tee -a log_bpm_${CRATE_NUMBER}.log 2>&1 || \
-        true
-    ;;
-    "fofb")
-      # AFCv4 uses openocd
-      ${SCRIPTPATH}/openocd-program.sh ${MCH_IP} ${board_fpga} ${slot} | \
+    "timing" | "fofb" | "pbpm" | "sr" | "bo")
+      ${SCRIPTPATH}/openocd-program.sh ${MCH_IP} ${board_fpga} ${afc_type} ${slot} | \
         tee -a log_bpm_${CRATE_NUMBER}.log 2>&1 || \
         true
     ;;
