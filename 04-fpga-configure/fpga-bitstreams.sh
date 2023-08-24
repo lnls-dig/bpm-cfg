@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# NOTE: These variables should contain the absolute path to the BIN/NSVF file.
+
 ############################
 # BPM
 ############################

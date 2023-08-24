@@ -4,9 +4,6 @@ set -euxo pipefail
 
 SCRIPTPATH="$( cd "$( dirname "${BASH_SOURCE[0]}"  )" && pwd  )"
 
-FPGA_BITSTREAMS_DIR_REL=bitstreams
-FPGA_BITSTREAMS_DIR=${SCRIPTPATH}/${FPGA_BITSTREAMS_DIR_REL}
-
 # Source FPGA mapping
 . ${SCRIPTPATH}/../misc/crate-fpga-mapping.sh
 
@@ -35,17 +32,6 @@ set -u
 [ ! -z "$(ls -A "${SCRIPTPATH}/../foreign/fpga-programming")" ] || \
     git submodule update --init
 
-exec_cmd "INFO " echo "Checking bitstream files..."
-
-for bit in "${FPGA_BITSTREAMS_ALL[@]}"; do
-
-  if [ ! -f ${FPGA_BITSTREAMS_DIR}/${bit} ]; then
-    exec_cmd "ERR  " echo "File ${bit} not found." >&2
-    exit 1
-  fi
-
-done
-
 exec_cmd "INFO " echo "Flashing FPGA gateware of all boards..."
 
 BPM_MAX_NUM_BOARDS=12
@@ -57,19 +43,19 @@ for slot in `seq 1 ${BPM_MAX_NUM_BOARDS}`; do
   # Get real FPGA bitstream name
   case ${bpm_crate_fpga} in
     "timing")
-      board_fpga=${FPGA_BITSTREAMS_DIR}/${FPGA_TIMING_BITSTREAM}
+      board_fpga=g${FPGA_TIMING_BITSTREAM}
     ;;
     "fofb")
-      board_fpga=${FPGA_BITSTREAMS_DIR}/${FPGA_FOFB_BITSTREAM}
+      board_fpga=g${FPGA_FOFB_BITSTREAM}
     ;;
     "pbpm")
-      board_fpga=${FPGA_BITSTREAMS_DIR}/${FPGA_PBPM_BITSTREAM}
+      board_fpga=g${FPGA_PBPM_BITSTREAM}
     ;;
     "sr")
-      board_fpga=${FPGA_BITSTREAMS_DIR}/${FPGA_SR_BITSTREAM}
+      board_fpga=g${FPGA_SR_BITSTREAM}
     ;;
     "bo")
-      board_fpga=${FPGA_BITSTREAMS_DIR}/${FPGA_BO_BITSTREAM}
+      board_fpga=g${FPGA_BO_BITSTREAM}
     ;;
     "")
       # Skip it
