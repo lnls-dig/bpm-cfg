@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
-# Script for flashing FPGAs
-# NOTE: By now, only AFCv4 is supported by openocd-prog-flash.sh
+# Script for flashing FPGAs via OpenOCD
 
 set -auxo pipefail
 
@@ -11,7 +10,9 @@ FPGA_PROGRAMMING_REPOS=${SCRIPTPATH}/../foreign/fpga-programming
 MCH=$1
 
 BIN=$2
-SLOT=$3
+AFC_TYPE=$3
+SLOT=$4
 
 cd ${FPGA_PROGRAMMING_REPOS}
-./openocd-prog-flash.sh ${BIN} afcv4_sfp xvc ${MCH} $((2540 + ${SLOT}))
+./openocd-prog-flash.sh ${BIN} ${AFC_TYPE} xvc ${MCH} $((2540 + ${SLOT}))
+./openocd-boot-flash.sh ${AFC_TYPE} xvc ${MCH} $((2540 + ${SLOT}))
