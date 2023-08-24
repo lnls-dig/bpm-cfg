@@ -6,7 +6,6 @@ SCRIPTPATH="$( cd "$( dirname "${BASH_SOURCE[0]}"  )" && pwd  )"
 
 FPGA_BITSTREAMS_DIR_REL=bitstreams
 FPGA_BITSTREAMS_DIR=${SCRIPTPATH}/${FPGA_BITSTREAMS_DIR_REL}
-MCH_PORT_BASE=2540
 
 # Source FPGA mapping
 . ${SCRIPTPATH}/../misc/crate-fpga-mapping.sh
