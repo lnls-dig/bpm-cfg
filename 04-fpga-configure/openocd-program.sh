@@ -15,3 +15,4 @@ SLOT=$4
 
 cd ${FPGA_PROGRAMMING_REPOS}
 ./openocd-prog-flash.sh ${BIN} ${AFC_TYPE} xvc ${MCH} $((2540 + ${SLOT}))
+./openocd-boot-flash.sh ${AFC_TYPE} xvc ${MCH} $((2540 + ${SLOT}))
