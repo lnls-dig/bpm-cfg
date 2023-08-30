@@ -26,10 +26,6 @@ CRATE_NUMBER_="$2"
 # Remove leading zeros
 CRATE_NUMBER="$(echo ${CRATE_NUMBER_} | sed 's/^0*//')"
 
-# Check if repo was cloned with fpga-programming submodule
-[ ! -z "$(ls -A "${SCRIPTPATH}/../foreign/fpga-programming")" ] || \
-    git submodule update --init
-
 exec_cmd "INFO " echo "Flashing FPGA gateware of all boards..."
 
 BPM_MAX_NUM_BOARDS=12
