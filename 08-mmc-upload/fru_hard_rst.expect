@@ -1,0 +1,11 @@
+#!/usr/bin/expect
+
+set timeout 20
+set hostname [lindex $argv 0]
+set fru_id [lindex $argv 1]
+
+spawn telnet $hostname
+expect "Type <?> to see a list of available commands."
+
+send "hard_reset $fru_id\r"
+expect "HardReset: reset FRU $fru_id time to restart 5 s"
