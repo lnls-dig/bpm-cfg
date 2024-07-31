@@ -2,108 +2,94 @@
 
 set -euo pipefail
 
-SCRIPTPATH="$( cd "$( dirname "${BASH_SOURCE[0]}"  )" && pwd  )"
+CRATE_NUM="$1"
 
-# Source RFFE mapping IPs
-. ${SCRIPTPATH}/bpm-rffe-mapping.sh
-
-# Source common functions
-. ${SCRIPTPATH}/../misc/functions.sh
-# Source Crate FPGA mapping
-. ${SCRIPTPATH}/../misc/crate-fpga-mapping.sh
-
-set +u
-
-# Simple argument checking
-if [ $# -lt 3 ]; then
-    echo "Usage: ./cpu-configure.sh <CPU IP> <Crate Number> <CPU SSH password>"
-    exit 1
+if [ -z "$CRATE_NUM" ]; then
+	echo "Usage: $0 CRATE_NUM"
 fi
 
-IP="$1"
-CRATE_NUMBER_="$2"
-# Remove leading zeros
-CRATE_NUMBER="$(echo ${CRATE_NUMBER_} | sed 's/^0*//')"
-SSHPASS_USR="$3"
+if [ "$EUID" -ne 0 ]; then
+   echo "This script must be run as root!"
+   exit 1
+fi
 
-set -u
+if [ "$CRATE_NUM" -eq 21 ]; then
+	CRATE_FQDN="ia-20rabpmtl-co-iocsrv.lnls-sirius.com.br"
+elif [ "$CRATE_NUM" -gt 21 ]; then
+	CRATE_FQDN="de-${CRATE_NUM}rabpm-co-iocsrv.abtlus.org.br"
+else
+	CRATE_FQDN="ia-${CRATE_NUM}rabpm-co-iocsrv.lnls-sirius.com.br"
+fi
 
-# Get CPU Hostname
-CPU_HOSTNAME_="BPM_CRATE_${CRATE_NUMBER}_CPU_HOSTNAME"
-CPU_HOSTNAME="${!CPU_HOSTNAME_}"
+hostnamectl set-hostname "$CRATE_FQDN"
+sysctl kernel.hostname="$CRATE_FQDN"
+sysctl -w kernel.hostname="$CRATE_FQDN"
 
-# Some variables
-HOSTNAME="${CPU_HOSTNAME}"
-CRATE="CRATE_${CRATE_NUMBER}"
+apt-get update -y
+apt-get upgrade -y
+apt-get dist-upgrade -y
+apt-get install build-essential vim tmux git rsync sshfs telnet screen picocom earlyoom procserv arch-install-scripts zabbix-agent2 tcpdump gdb strace wget lsb-release iptables iptables-persistent -y
+apt-get autoremove -y
 
-BPM_HALCS_CFG_TEMPLATE_IN_FILE="${SCRIPTPATH}/halcs_cfg.in"
-BPM_HALCS_CFG_TEMPLATE_OUT_FILE="${SCRIPTPATH}/halcs.cfg"
+iptables -t nat -A PREROUTING -p udp ! -s 127.0.0.1/24 --dport 5064 -j DNAT --to 255.255.255.255:5064
+iptables-save > /etc/iptables/rules.v4
 
-BPM_EPICS_CFG_FILE="/etc/sysconfig/bpm-epics-ioc"
-BPM_HALCS_CFG_FILE="/usr/local/etc/halcs/halcs.cfg"
-TIM_RX_EPICS_CFG_FILE="/etc/sysconfig/tim-rx-epics-ioc"
+usermod -a lnls-bpm -G dialout
+useradd iocs -m --no-user-group --shell /usr/sbin/nologin --home-dir /opt/container-iocs
 
-## Ask sudo password only once and
-## keep updating sudo timestamp to
-## avoid asking again
-#sudo -v
-#while true; do sudo -n true; sleep 60; kill -0 "$$" || \
-#    exit; done 2>/dev/null &
-#
-## Install packages
-#sudo apt-get update && \
-#sudo apt-get install -y \
-#    openssh-client \
-#    sshpass
+loginctl enable-linger lnls-bpm
+loginctl enable-linger iocs
 
+cd /tmp
+wget https://packages.wazuh.com/4.x/apt/pool/main/w/wazuh-agent/wazuh-agent_4.7.5-1_amd64.deb && sudo WAZUH_MANAGER='wazuh.cnpem.br' WAZUH_AGENT_GROUP='LNLS' dpkg -i ./wazuh-agent_4.7.5-1_amd64.deb
 
-exec_cmd "TRACE" echo "Generating BPM RFFE IP mapping file..."
+sed -i '/Server=127.0.0.1/c\Server=zabbix.lnls.br' /etc/zabbix/zabbix_agent2.conf
+sed -i '/ServerActive=127.0.0.1/c\ServerActive=zabbix.lnls.br' /etc/zabbix/zabbix_agent2.conf
 
-# Generate HALCS config from template
-BPM_MAX_NUM_BOARDS=12
-BPM_MAX_NUM_HALCS=2
-cp ${BPM_HALCS_CFG_TEMPLATE_IN_FILE} ${BPM_HALCS_CFG_TEMPLATE_OUT_FILE}
-for board in `seq 1 ${BPM_MAX_NUM_BOARDS}`; do
-    for halcs in `seq 0 $((${BPM_MAX_NUM_HALCS}-1))`; do
-        bpm_rffe_ip_idx="${board}${halcs}"
-        bpm_rffe_ip="BPM_RFFE_IP_MAPPING[${bpm_rffe_ip_idx}]"
-        bpm_rffe_proto="BPM_RFFE_PROTO_MAPPING[${bpm_rffe_ip_idx}]"
-        sed -i \
-            -e "s#<RFFE_BOARD${board}_HALCS${halcs}_IP>#${!bpm_rffe_ip}#" \
-            -e "s#<RFFE_BOARD${board}_HALCS${halcs}_PROTO>#${!bpm_rffe_proto}#" \
-            ${BPM_HALCS_CFG_TEMPLATE_OUT_FILE}
-    done
-done
+sed -i '/GRUB_CMDLINE_LINUX=""/c\GRUB_CMDLINE_LINUX="pci=noaer intel_iommu=on console=ttyS0,115200"' /etc/default/grub
+update-grub
 
+ROOTFS_PART=`findmnt -n -r / | cut -d ' '  -f 2 | cut -d '[' -f 1`
+mount $ROOTFS_PART /mnt/
+btrfs subvolume create /mnt/@snapshots
+btrfs subvolume create /mnt/@home
+mv /home/lnls-bpm /mnt/@home
+mkdir /mnt/@snapshots/rootfs
+mkdir /mnt/@snapshots/home
+umount /mnt
+mkdir /snapshots
+mount $ROOTFS_PART /home -o subvol=/@home
+mount $ROOTFS_PART /snapshots -o subvol=/@snapshots
+genfstab -U / > /etc/fstab
 
-exec_cmd "TRACE" echo "Modifying EPICS PV prefixes..."
+printf "\ndeb http://deb.debian.org/debian/ bookworm-backports main non-free-firmware contrib non-free\n" >> /etc/apt/sources.list
+apt-get update
+apt-get install podman podman-compose -t bookworm-backports -y
 
-# Login via SSH and setup configuration files
-# Set the --static, --transient and --pretty
-# hostnames by the HOSTNAME variable contents
-SSHPASS="${SSHPASS_USR}" sshpass -e \
-    ssh -o StrictHostKeyChecking=no \
-    root@${IP} \
-    bash -c "\
-        echo \"\" > /etc/hostname && \
-        sysctl kernel.hostname=\"${HOSTNAME}\" > /dev/null && \
-        sysctl -w kernel.hostname=\"${HOSTNAME}\" > /dev/null && \
-        hostnamectl set-hostname \"${HOSTNAME}\" > /dev/null && \
-        sed -i -e \"\
-            { \
-                s|EPICS_PV_CRATE_PREFIX=.*\$|EPICS_PV_CRATE_PREFIX=${CRATE}|; \
-            }\" ${BPM_EPICS_CFG_FILE} && \
-        sed -i -e \"\
-            { \
-                s|EPICS_PV_CRATE_PREFIX=.*\$|EPICS_PV_CRATE_PREFIX=${CRATE}|; \
-            }\" ${TIM_RX_EPICS_CFG_FILE} \
-    "
+printf '#/bin/sh\n\nset -e\nsnap_root_path=/snapshots/rootfs/rootfs-$(date +%%F-%%H-%%M-%%S)\nsnap_home_path=/snapshots/home/home-$(date +%%F-%%H-%%M-%%S)\n\n[ ! -e "$snap_root_path" ] && btrfs subvolume snapshot -r / "$snap_root_path"\n[ ! -e "$snap_home_path" ] && btrfs subvolume snapshot -r /home "$snap_home_path"\n' > /usr/local/bin/snapshot
+chmod +x /usr/local/bin/snapshot
 
-exec_cmd "TRACE" echo "Copying generated files to CPU..."
+printf "#/bin/sh\nlspci  -mm -v | grep -e PhySlot  | tr '\t' ' '\n" > /usr/local/bin/pcie-list-slots
+chmod +x /usr/local/bin/pcie-list-slots
 
-SSHPASS="${SSHPASS_USR}" sshpass -e \
-    scp \
-    ${BPM_HALCS_CFG_TEMPLATE_OUT_FILE} \
-    root@${IP}:${BPM_HALCS_CFG_FILE}
+printf '#include <fcntl.h>
+#include <unistd.h>
+#include <stdio.h>
 
-exec_cmd "INFO " echo "CPU Configured Successfully!"
+int main(int argc, char** argv) {
+  int fd = open("/sys/bus/pci/rescan", O_WRONLY);
+  if (fd < 0) {
+    fprintf(stderr, "Could not write to /sys/bus/pci/rescan. Are you running it as root?\\n");
+    return 1;
+  }
+  write(fd, "1\\n", 2);
+  close(fd);
+  return 0;
+}\n' | cc -O2 -o /usr/local/bin/pcie-rescan -xc -
+chmod u+s /usr/local/bin/pcie-rescan
+
+mkdir -p /opt/afc-epics-ioc/service
+printf '#/bin/sh\necho IOC not installed yet!\n' > /opt/afc-epics-ioc/service/ioc-start.sh
+chmod +x /opt/afc-epics-ioc/service/ioc-start.sh
+
+printf "SUBSYSTEM==\"pci\", ATTR{vendor}==\"0x10ee\", ATTR{subsystem_device}==\"0x0007\", RUN+=\"/usr/bin/setpci -s %%k COMMAND=0x2\", RUN+=\"/bin/sh -c 'chmod 666 /sys/bus/pci/devices/%%k/resource*'\", RUN+=\"/opt/afc-epics-ioc/service/ioc-start.sh %%k\"" > /etc/udev/rules.d/95-afc.rules
