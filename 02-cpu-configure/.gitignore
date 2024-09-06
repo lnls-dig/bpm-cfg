@@ -1,0 +1,3 @@
+pcie-remove
+*.o
+*.d
