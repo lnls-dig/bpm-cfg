@@ -5,6 +5,7 @@
 
 set -euo pipefail
 
+INIT_PWD="$PWD"
 CRATE_NUM="$1"
 
 if [ -z "$CRATE_NUM" ]; then
@@ -103,19 +104,6 @@ chmod +x /usr/local/bin/pcie-list-slots
 # devices. Very useful to recover from 'Powering on due to button
 # press' situations. It has to be a binary executable otherwise the
 # Linux kernel will ignore the suid bit.
-printf '#include <fcntl.h>
-#include <unistd.h>
-#include <stdio.h>
-
-int main(int argc, char** argv) {
-  int fd = open("/sys/bus/pci/rescan", O_WRONLY);
-  if (fd < 0) {
-    fprintf(stderr, "Could not write to /sys/bus/pci/rescan. Are you running it as root?\\n");
-    return 1;
-  }
-  write(fd, "1\\n", 2);
-  close(fd);
-  return 0;
-}
-' | cc -O2 -o /usr/local/bin/pcie-rescan -xc -
-chmod u+s /usr/local/bin/pcie-rescan
+cd "$INIT_PWD"
+make install
+chmod u+s /usr/local/bin/pcie-rescan /usr/local/bin/pcie-remove
