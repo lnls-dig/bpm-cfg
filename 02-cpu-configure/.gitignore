@@ -2,3 +2,4 @@ pcie-remove
 pcie-rescan
 *.o
 *.d
+*.rej
