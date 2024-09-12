@@ -38,20 +38,40 @@ for slot in `seq 1 ${BPM_MAX_NUM_BOARDS}`; do
   # Get real FPGA bitstream name
   case ${bpm_crate_fpga} in
     "timing")
-      board_fpga=${FPGA_TIMING_BIN}
+      if [ -n "$FPGA_TIMING_BIN" ]; then
+        board_fpga=${FPGA_TIMING_BIN}
+      else
+        continue
+      fi
     ;;
     "fofb")
-      afc_type="afcv4_sfp"
-      board_fpga=${FPGA_FOFB_BIN}
+      if [ -n "$FPGA_FOFB_BIN" ]; then
+        afc_type="afcv4_sfp"
+        board_fpga=${FPGA_FOFB_BIN}
+      else
+        continue
+      fi
     ;;
     "pbpm")
-      board_fpga=${FPGA_PBPM_BIN}
+      if [ -n "$FPGA_PBPM_BIN" ]; then
+        board_fpga=${FPGA_PBPM_BIN}
+      else
+        continue
+      fi
     ;;
     "sr")
-      board_fpga=${FPGA_SR_BIN}
+      if [ -n "$FPGA_SR_BIN" ]; then
+        board_fpga=${FPGA_SR_BIN}
+      else
+        continue
+      fi
     ;;
     "bo")
-      board_fpga=${FPGA_BO_BIN}
+      if [ -n "$FPGA_BO_BIN" ]; then
+        board_fpga=${FPGA_BO_BIN}
+      else
+        continue
+      fi
     ;;
     "")
       # Skip it
