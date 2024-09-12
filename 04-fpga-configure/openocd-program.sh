@@ -2,7 +2,7 @@
 
 # Script for flashing FPGAs via OpenOCD
 
-set -auxo pipefail
+set -auo pipefail
 
 SCRIPTPATH="$( cd "$( dirname "${BASH_SOURCE[0]}"  )" && pwd  )"
 FPGA_PROGRAMMING_REPOS=${SCRIPTPATH}/../foreign/fpga-programming

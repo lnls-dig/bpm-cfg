@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -auxo pipefail
+set -auo pipefail
 
 for i in `seq -f %02g 1 20`; do
 
