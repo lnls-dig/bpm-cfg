@@ -9,10 +9,19 @@ FPGA_PROGRAMMING_REPOS=${SCRIPTPATH}/../foreign/fpga-programming
 
 MCH=$1
 
-BIN=$2
+BIN_BIT=$2
 AFC_TYPE=$3
 SLOT=$4
 
+echo $BIN_BIT
+
 cd ${FPGA_PROGRAMMING_REPOS}
-./openocd-prog-flash.sh ${BIN} ${AFC_TYPE} xvc ${MCH} $((2540 + ${SLOT}))
-./openocd-boot-flash.sh ${AFC_TYPE} xvc ${MCH} $((2540 + ${SLOT}))
+if [ ${BIN_BIT: -4} == ".bin" ]; then
+	./openocd-prog-flash.sh ${BIN_BIT} ${AFC_TYPE} xvc ${MCH} $((2540 + ${SLOT}))
+	./openocd-boot-flash.sh ${AFC_TYPE} xvc ${MCH} $((2540 + ${SLOT}))
+elif [ ${BIN_BIT: -4} == ".bit" ]; then
+	./openocd-prog.sh ${BIN_BIT} ${AFC_TYPE} xvc ${MCH} $((2540 + ${SLOT}))
+else
+	echo "Unknown file extension:" "$BIN_BIT"
+	exit 1
+fi
