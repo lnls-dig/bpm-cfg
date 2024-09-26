@@ -29,13 +29,14 @@ For example:
 
     ./02-cpu-configure/cpu-configure.sh 10.0.18.55 9 root-pass
 
-### 3. Run scripts inside 03-mmc-configure to configure the MMCs firmware
+### 3. Run scripts inside 03-mmc-upload to configure the MMCs firmware
 
-    ./03-mmc-configure/mmc-configure.sh <MCH IP>
+Before running the script, be sure to have the desired firmware in an `binaries` directory (./3-mmc-upload/binaries)
+    ./03-mmc-upload/mmc-upload.sh <Crate Number> <OpenMMC Version>
 
 For example:
 
-    ./03-mmc-configure/mmc-configure.sh 10.0.18.60
+    ./03-mmc-upload/mmc-upload.sh 1 v1.5.1
 
 
 ### 4. Run scripts inside 04-fpga-configure to configure the FPGAs
