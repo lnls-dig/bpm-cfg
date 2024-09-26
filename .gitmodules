@@ -4,6 +4,3 @@
 [submodule "foreign/bpm-tests"]
 	path = foreign/bpm-tests
 	url = https://github.com/lnls-dig/bpm-tests
-[submodule "foreign/hpm-downloader"]
-	path = foreign/hpm-downloader
-	url = https://github.com/lnls-dig/hpm-downloader
