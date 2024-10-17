@@ -34,7 +34,7 @@ export DEBIAN_FRONTEND=noninteractive
 
 apt-get update -y
 apt-get dist-upgrade -y
-apt-get install build-essential vim tmux git rsync sshfs telnet screen picocom earlyoom procserv arch-install-scripts zabbix-agent2 tcpdump gdb strace wget lsb-release iptables iptables-persistent systemd-timesyncd -y
+apt-get install build-essential vim tmux git rsync sshfs telnet screen picocom earlyoom procserv arch-install-scripts zabbix-agent2 tcpdump gdb strace wget lsb-release iptables iptables-persistent systemd-timesyncd expect -y
 apt-get autoremove -y
 
 # Replicate UDP packets to all listeners (EPICS IOCs).
