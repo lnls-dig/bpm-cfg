@@ -1,0 +1,17 @@
+#!/bin/sh
+
+set -eu
+
+if [ $# -ne 1 ]; then
+    echo "Usage: $0 <virtual_slot>"
+    exit 1
+fi
+
+expect << EOF
+set timeout 5
+
+spawn telnet 192.168.2.$(( 190 + $1 ))
+expect "NuttShell (NSH)"
+
+send "reboot\r"
+EOF
