@@ -105,5 +105,4 @@ chmod +x /usr/local/bin/pcie-list-slots
 # press' situations. It has to be a binary executable otherwise the
 # Linux kernel will ignore the suid bit.
 cd "$INIT_PWD"
-make install
-chmod u+s /usr/local/bin/pcie-rescan /usr/local/bin/pcie-remove /usr/local/bin/ioc-restart
+make install-setuid
