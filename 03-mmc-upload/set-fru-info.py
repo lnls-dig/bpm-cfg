@@ -34,6 +34,7 @@ yaml['ProductInfo']['part_number'] = 'AFC'
 yaml['ProductInfo']['version'] = '4.0.2'
 yaml['ProductInfo']['asset_tag'] = 'No tag'
 yaml['ProductInfo']['fru_file_id'] = 'AFCFRU'
+yaml['MultirecordArea'][0]['current_draw'] = '6.0'
 yaml['MultirecordArea'][3]['identifier_type'] = 'CLASS_ID'
 yaml['MultirecordArea'][3]['identifier_body'] = ['D1.3']
 
