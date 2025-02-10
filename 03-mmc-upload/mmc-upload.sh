@@ -95,7 +95,7 @@ for slot in `seq 1 12`; do
     fi
 
     # Retry the update if the hash compare fails
-    tries=0
+    counter=0
     while [[ ${COMMIT_HASH_READ} != ${COMMIT_HASH} ]]
     do
         echo "Hash compare failed! Slot ${slot} Crate ${crate_ip}"
