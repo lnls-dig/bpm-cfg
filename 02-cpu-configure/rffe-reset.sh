@@ -10,4 +10,5 @@ expect << EOF
 spawn telnet 192.168.2.$(( 190 + $1 ))
 expect "nsh>"
 send "reboot\r"
+sleep 0.5
 EOF
