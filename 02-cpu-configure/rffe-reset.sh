@@ -8,6 +8,6 @@ fi
 
 expect << EOF
 spawn telnet 192.168.2.$(( 190 + $1 ))
-expect "NuttShell (NSH)"
+expect "nsh>"
 send "reboot\r"
 EOF
