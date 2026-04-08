@@ -37,6 +37,20 @@ apt-get dist-upgrade -y
 apt-get install build-essential vim tmux git rsync sshfs telnet screen picocom earlyoom procserv arch-install-scripts zabbix-agent2 tcpdump gdb strace wget lsb-release iptables iptables-persistent systemd-timesyncd expect -y
 apt-get autoremove -y
 
+# Set up networking with systemd-networkd
+# back up ifupdown config, if it exists
+mv /etc/network/interfaces /etc/network/interfaces || true
+# set up networkd
+cat << EOF > /etc/systemd/network/lan0.network
+[Match]
+Name=enp15s0
+Type=ether
+
+[Network]
+DHCP=ipv4
+EOF
+systemctl enable systemd-networkd
+
 # Replicate UDP packets to all listeners (EPICS IOCs).
 iptables -t nat -A PREROUTING -p udp ! -s 127.0.0.1/24 --dport 5064 -j DNAT --to 255.255.255.255:5064
 iptables-save > /etc/iptables/rules.v4
